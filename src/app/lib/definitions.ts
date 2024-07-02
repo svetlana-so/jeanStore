@@ -8,7 +8,20 @@ export type Invoice = {
 
 export type User = {
   id: string;
-  name: string;
+  role: string;
   email: string;
   password: string;
+};
+
+export type Product = {
+  id: string;
+  brand: string;
+  
+  date: string;
+};
+
+export type Image = {
+  id: string;
+  product_id: string;
+  image_url: string;
 };
