@@ -49,8 +49,7 @@ export default function Form() {
           url,
         });
       }
-      console.log(urls)
-      console.log(state)
+     
       setFileStates([]);
       setUrls([]);
       
