@@ -1,0 +1,45 @@
+{
+  "name": "jeans_store",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "prettier": "prettier --write --ignore-unknown .",
+    "prettier:check": "prettier --check --ignore-unknown .",
+    "seed": "node -r dotenv/config ./scripts/seed.js",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@edgestore/react": "^0.1.7",
+    "@edgestore/server": "^0.1.7",
+    "@heroicons/react": "^2.1.4",
+    "@vercel/postgres": "^0.9.0",
+    "bcrypt": "^5.1.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.399.0",
+    "next": "14.2.4",
+    "next-auth": "^5.0.0-beta.19",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-dropzone": "^14.2.3",
+    "tailwind-merge": "^2.3.0",
+    "vercel": "^32.3.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vercel/style-guide": "^6.0.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4",
+    "postcss": "^8",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
