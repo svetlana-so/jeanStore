@@ -5,7 +5,7 @@ import { UploadCloudIcon, X } from 'lucide-react';
 import * as React from 'react';
 import { useDropzone, type DropzoneOptions } from 'react-dropzone';
 import { twMerge } from 'tailwind-merge';
-import Image from 'next/image';
+
 
 const variants = {
   base: 'relative rounded-md aspect-square flex justify-center items-center flex-col cursor-pointer min-h-[150px] min-w-[200px] border border-dashed border-gray-400 dark:border-gray-300 transition-colors duration-200 ease-in-out',
@@ -31,6 +31,7 @@ type InputProps = {
   onFilesAdded?: (addedFiles: FileState[]) => void | Promise<void>;
   disabled?: boolean;
   dropzoneOptions?: Omit<DropzoneOptions, 'disabled'>;
+  onCancel: () => void; 
 };
 
 const ERROR_MESSAGES = {
@@ -50,7 +51,7 @@ const ERROR_MESSAGES = {
 
 const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { dropzoneOptions, value, className, disabled, onChange, onFilesAdded },
+    { dropzoneOptions, value, className, disabled, onChange, onFilesAdded, onCancel },
     ref,
   ) => {
     const [customError, setCustomError] = React.useState<string>();
@@ -151,11 +152,14 @@ const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
               key={index}
               className={variants.image + ' relative aspect-square h-full'}
             >
-              <Image
+              
+              <img
                 className="h-full w-full rounded-md object-cover"
                 src={imageUrls[index]}
                 alt={typeof file === 'string' ? file : file.name}
               />
+            
+              
               {/* Progress Bar */}
               {typeof progress === 'number' && (
                 <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-md bg-black bg-opacity-70">
@@ -169,6 +173,7 @@ const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                   onClick={(e) => {
                     e.stopPropagation();
                     void onChange?.(value.filter((_, i) => i !== index) ?? []);
+                    void onCancel?.();
                   }}
                 >
                   <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-solid border-gray-500 bg-white transition-all duration-300 hover:h-6 hover:w-6 dark:border-gray-400 dark:bg-black">
@@ -192,11 +197,11 @@ const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
             >
               {/* Main File Input */}
               <input ref={ref} {...getInputProps()} />
-              <div className="flex flex-col items-center justify-center text-xs text-gray-400">
+              <div className="flex flex-col items-center justify-center text-xs text-gray-700">
                 <UploadCloudIcon className="mb-2 h-7 w-7" />
-                <div className="text-gray-400">drag & drop to upload</div>
+                <div className="text-gray-700">drag & drop to upload</div>
                 <div className="mt-3">
-                  <Button disabled={disabled}>select</Button>
+                  <Button className='bg-green-600' disabled={disabled}>select</Button>
                 </div>
               </div>
             </div>

@@ -4,21 +4,24 @@ import {
   MultiImageDropzone,
   type FileState,
 } from '@/app/components/MultiImageDropzone';
+import { useRouter } from 'next/navigation'
 import { useEdgeStore } from '@/app/lib/edgestore';
 import { useState } from 'react';
-import { createProduct } from '@/app/lib/actions';
-import type { FormFields} from '@/app/lib/actions';
+import { createProduct, createImages, FormFields } from '@/app/lib/actions';
 import { Button } from '../button';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 
 export default function Form() {
+
+  const router = useRouter()
   const [fileStates, setFileStates] = useState<FileState[]>([]);
   const [urls, setUrls] = useState<string[]>([]);
-  const [isCancelled, setIsCancelled] = useState(false);
   const { edgestore } = useEdgeStore();
 
   const {register, handleSubmit, setError, formState: {errors, isSubmitting}} = useForm<FormFields>()
+
+
 
   function updateFileProgress(key: string, progress: FileState['progress']) {
     setFileStates((fileStates) => {
@@ -33,45 +36,45 @@ export default function Form() {
     });
   }
 
-  async function handleCancel() {
-    setIsCancelled(true);
+  async function cancelUpload() {
     for (const url of urls) {
       await edgestore.publicFiles.delete({
         url,
       });
     }
+    console.log(fileStates, urls)
     setFileStates([]);
     setUrls([]);
+    console.log(fileStates, urls)
   }
 
-  if (isCancelled) {
-    return (
-      <div className="m-6 flex flex-col items-center">
-        <div>CANCELLED!!!</div>
-        <button
-          className="mt-4 rounded bg-green-500 px-3 py-1 text-black hover:opacity-80"
-          onClick={() => setIsCancelled(false)}
-        >
-          Return to Upload
-        </button>
-      </div>
-    );
-  }
+
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-     /*  // Confirm uploads
+      
       for (const url of urls) {
         await edgestore.publicFiles.confirmUpload({ url });
-      } */
+      }
 
-      const result = await createProduct(data);
+      const productResult = await createProduct(data);
 
-      if (!result.success) {
-       setError('root', {
-        type: 'manual',
-        message: result.message || 'Error creating product',
-       })
+      if (!productResult.success) {
+        setError('root', {
+          type: 'manual',
+          message: productResult.message || 'Error creating product',
+        });
+        return;
+      }
+
+      const imagesResult = await createImages(urls, productResult.productId);
+      router.push('/dashboard/products')
+
+      if (!imagesResult.success) {
+        setError('root', {
+          type: 'manual',
+          message: imagesResult.message || 'Error creating images',
+        });
       }
     } catch (err) {
       setError('root', {
@@ -82,15 +85,14 @@ export default function Form() {
   };
 
 
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-    <div>
+    <div className='flex flex-col justify-center gap-4' >
+      <div>
       <MultiImageDropzone
         value={fileStates}
         dropzoneOptions={{
           maxFiles: 6,
-          maxSize: 1024 * 1024 * 1, // 1 MB
         }}
         onChange={(files) => {
           setFileStates(files);
@@ -124,7 +126,10 @@ export default function Form() {
             }),
           );
         }}
+        onCancel={cancelUpload}
       />
+      </div>
+      
       <div className="flex flex-col gap-2">
         <div>Brand</div>
         <input
@@ -137,14 +142,8 @@ export default function Form() {
           />
           {errors.brand && (<div className='text-red-400'>{errors.brand.message}</div>)}
           {errors.root && (<div className='text-red-400'>{errors.root.message}</div>)}
-        <div className="mt-2 flex justify-end gap-2">
-          <button
-
-            className="rounded bg-white px-3 py-1 text-black hover:opacity-80"
-            onClick={handleCancel}
-          >
-            Cancel
-          </button>
+        <div className="mt-2 flex justify-end">
+  
           <Button
           disabled= {isSubmitting}
           type="submit"
