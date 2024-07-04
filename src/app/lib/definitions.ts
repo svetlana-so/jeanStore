@@ -25,3 +25,9 @@ export type Image = {
   product_id: string;
   image_url: string;
 };
+
+export type ProductWithImage = {
+  id: string;
+  brand: string;
+  images: string[];
+};
