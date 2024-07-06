@@ -1,4 +1,4 @@
-/* export type Invoice = {
+export type Invoice = {
   id: string;
   customer_id: string;
   amount: number;
@@ -11,7 +11,7 @@ export type User = {
   role: string;
   email: string;
   password: string;
-}; */
+};
 
 export type Product = {
   id: string;
