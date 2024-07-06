@@ -10,7 +10,7 @@ export async function fetchProducts() {
       SELECT
       products.id,
       products.brand,
-      ARRAY_AGG(images.image_url) AS images
+      ARRAY_AGG(json_build_object('id', images.id, 'url', images.image_url)) AS images
     FROM products
     LEFT JOIN images ON products.id = images.product_id
     GROUP BY products.id
