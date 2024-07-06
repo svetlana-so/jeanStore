@@ -6,7 +6,9 @@ import { sql } from '@vercel/postgres';
 import { redirect } from 'next/navigation'; */
 
 const schema = z.object({
-  brand: z.string()
+  brand: z.string(),
+  price: z.number(),
+  category: z.string()
 });
 
 export type FormFields = z.infer<typeof schema>;
@@ -19,10 +21,10 @@ export async function createProduct(data: FormFields) {
       INSERT INTO products (
         brand, size_label, size_waist, size_length, color, fit, material, stretch, 
         measurement_waist, measurement_hip, measurement_front_crotch, 
-        measurement_back_crotch, measurement_thigh, measurement_inseam, date
+        measurement_back_crotch, measurement_thigh, measurement_inseam, price, category, date
       ) VALUES (
         ${data.brand}, 'M', '32', '34', 'Blue', 'Slim', 'Cotton', 'Stretchy', 
-        '30', '40', '10', '12', '22', '32', ${date}
+        '30', '40', '10', '12', '22', '32', ${data.price}, ${data.category}, ${date}
       )
       RETURNING id;
     `;

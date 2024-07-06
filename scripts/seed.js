@@ -62,8 +62,8 @@ async function seedProducts(client) {
     measurement_back_crotch FLOAT NOT NULL,
     measurement_thigh FLOAT NOT NULL,
     measurement_inseam FLOAT NOT NULL,
-    price FLOAT NOT NULL,
-    status VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    category VARCHAR(255) NOT NULL,
     date DATE DEFAULT CURRENT_DATE
     );
     `;

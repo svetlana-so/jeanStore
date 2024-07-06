@@ -11,6 +11,11 @@ import { createProduct, createImages, FormFields } from '@/app/lib/actions';
 import { Button } from '../button';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+const categories = [
+  'Women',
+  'Men',
+  'Kids',  
+]
 
 export default function Form() {
 
@@ -131,15 +136,74 @@ export default function Form() {
       </div>
       
       <div className="flex flex-col gap-2">
-        <div>Brand</div>
-        <input
-        {...register('brand', {
-          required: 'Is required'
-        })}
-            type="text"
-            name="brand"
-            className="rounded border border-zinc-600 bg-zinc-100 px-2 py-1"
-          />
+         {/* Brand */}
+      <div className="mb-4">
+          <label htmlFor="brand" className="mb-2 block text-sm font-medium">
+           Brand
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+              {...register('brand', {
+                required: 'Is required'
+              })}
+                id="brand"
+                name="brand"
+                type="text"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              
+            </div>
+          </div>
+        </div>
+        {/* Price */}
+        <div className="mb-4">
+          <label htmlFor="price" className="mb-2 block text-sm font-medium">
+           Price
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+              {...register('price', {
+                required: 'Price is required'
+              })}
+                id="price"
+                name="price"
+                type="number"
+                step="0.01"
+                placeholder="Enter SEK amount"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              
+            </div>
+          </div>
+        </div>
+            {/* Category */}
+        <div className="mb-4">
+          <label htmlFor="category" className="mb-2 block text-sm font-medium">
+            Choose category
+          </label>
+          <div className="relative">
+            <select
+            {...register('category', {
+              required: 'Is required'
+            })}
+              id="category"
+              name="category"
+              defaultValue=""
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+            >
+              <option value="" disabled>
+                Select a category
+              </option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
           {errors.brand && (<div className='text-red-400'>{errors.brand.message}</div>)}
           {errors.root && (<div className='text-red-400'>{errors.root.message}</div>)}
         <div className="mt-2 flex justify-end">
