@@ -31,7 +31,9 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.52.1",
+    "react-responsive-carousel": "^3.2.23",
     "tailwind-merge": "^2.3.0",
+    "use-debounce": "^10.0.1",
     "vercel": "^32.3.0",
     "zod": "^3.23.8"
   },

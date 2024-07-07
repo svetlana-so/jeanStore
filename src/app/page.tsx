@@ -1,21 +1,26 @@
-import { Card } from "./ui/products/card";
-import { fetchProducts } from "./lib/data";
+import { fetchProductsPages } from "./lib/data";
 import NavBar from "./ui/home/nav-bar";
+import JeansList from "./ui/products/jeansList";
 
-export default async function Home() {
+export default async function Home({searchParams}: {
+  searchParams?: {
+    query?: string,
+    page?: string
+  }
+}) {
 
-  const products = await fetchProducts();
-  
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = fetchProductsPages(query)
   return (
     <main>
+      
       <div className="m-4">
       <NavBar/>
       </div>  
-      <div className="m-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map(product => (
-            <Card key={product.id} product={product}/>
-          ))}
-        </div>
+      <div >
+        <JeansList query={query} currentPage={currentPage}/>
+      </div>
         
     </main>
   );
