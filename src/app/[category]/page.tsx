@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import JeansList from '../ui/products/jeansList';
 import { fetchProductsByCategory } from '../lib/data';
+import PopOver from '../ui/filter-pop-over';
+
 
 
 export const metadata: Metadata = {
@@ -17,8 +19,9 @@ const products = await fetchProductsByCategory(category);
 
 
   return (
-    <main>
+    <div className="mx-4">
+      <PopOver />
       <JeansList products = {products} />
-    </main>
+    </div>
   );
 }
