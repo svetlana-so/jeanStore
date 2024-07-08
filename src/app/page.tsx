@@ -1,6 +1,8 @@
 import { fetchProductsPages } from "./lib/data";
-import NavBar from "./ui/home/nav-bar";
-import JeansList from "./ui/products/jeansList";
+import { Suspense } from 'react';
+import AllJeansList from "./ui/home/all-jeans-list";
+import Loading from "./ui/skeletons";
+import Pagination from "./ui/products/pagination";
 
 export default async function Home({searchParams}: {
   searchParams?: {
@@ -11,17 +13,19 @@ export default async function Home({searchParams}: {
 
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = fetchProductsPages(query)
+  const totalPages = await fetchProductsPages(query);
+
+
   return (
+
+    
     <main>
-      
-      <div className="m-4">
-      <NavBar/>
-      </div>  
-      <div >
-        <JeansList query={query} currentPage={currentPage}/>
+      <Suspense  fallback={<Loading/>}>
+        <AllJeansList />
+      </Suspense>
+      <div className="mt-5 flex w-full justify-center">
+      <Pagination totalPages={totalPages} />
       </div>
-        
     </main>
   );
 }

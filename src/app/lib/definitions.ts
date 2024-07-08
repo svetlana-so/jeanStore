@@ -25,8 +25,9 @@ export type Image = {
   url: string;
 };
 
-export type ProductWithImage = {
-  id: string;
+export interface ProductWithImage {
+  id: number;
   brand: string;
+  price: number;
   images: Image[];
-};
+}

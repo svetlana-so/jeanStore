@@ -10,17 +10,14 @@ type CardProps = {
 
 export const Card: React.FC<CardProps> = ({product}) => {
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-4'>
     <h2 className="font-bold">{product.brand}</h2>
-    <Carousel width={300}>
+    <Carousel >
                 {product.images.map((image) => (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img key={image.id} src={image.url} alt={`Image of ${product.brand}`} className="w-full h-auto object-cover"/>
                 ))}
           </Carousel>
       </div>
-    
-
-
   )
 }

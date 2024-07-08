@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { EdgeStoreProvider } from '@/app/lib/edgestore';
 import './globals.css';
+import NavBar from './ui/home/nav-bar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,6 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      <div className="w-full flex-none p-4">
+        <NavBar />
+      </div>
         <EdgeStoreProvider>{children}</EdgeStoreProvider>
       </body>
     </html>
