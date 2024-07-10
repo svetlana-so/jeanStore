@@ -1,15 +1,10 @@
 'use server';
-import { createKysely } from '@vercel/postgres-kysely';
-import { z } from 'zod';
-import { Database } from './definitions';
-import {sql} from '@vercel/postgres'
 
+import { sql } from '@vercel/postgres';
 import { ProductWithImage } from './definitions';
-
 
 // rewrite to kysely
 export async function fetchProducts() {
-  
   try {
     const data = await sql<ProductWithImage>`
       SELECT
@@ -45,7 +40,7 @@ export async function fetchProductsByCategory(category: string) {
     WHERE products.category = ${category}
     GROUP BY products.id
       `;
-    return data.rows
+    return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch products by category.');
@@ -58,7 +53,7 @@ export async function fetchFilteredProducts(
   currentPage: number,
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
- 
+
   try {
     const data = await sql<ProductWithImage>`
       SELECT
@@ -82,4 +77,3 @@ export async function fetchFilteredProducts(
     throw new Error('Failed to fetch products.');
   }
 }
-

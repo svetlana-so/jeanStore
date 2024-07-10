@@ -4,7 +4,7 @@ import React from "react";
 import {Popover, PopoverTrigger, PopoverContent, Button, Input} from "@nextui-org/react";
 import { IoFilterOutline } from "react-icons/io5";
 import {Select, SelectSection, SelectItem} from "@nextui-org/select";
-import {jeansColors} from "../lib/definitions";
+import {jeansColors} from "../lib/jeansDefinitions";
 
 export default function PopOver() {
 
