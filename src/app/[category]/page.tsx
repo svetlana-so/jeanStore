@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import JeansList from '../ui/products/jeansList';
 import { fetchProductsByCategory } from '../lib/data';
-import PopOver from '../ui/filter-pop-over';
 import { Filter } from '../ui/products/filter';
 
 
