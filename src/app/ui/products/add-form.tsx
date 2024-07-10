@@ -3,7 +3,7 @@
 import {
   MultiImageDropzone,
   type FileState,
-} from '@/app/components/MultiImageDropzone';
+} from '@/app/ui/dashboard/MultiImageDropzone';
 import { useRouter } from 'next/navigation'
 import { useEdgeStore } from '@/app/lib/edgestore';
 import { useState } from 'react';
@@ -72,7 +72,7 @@ export default function Form() {
         return;
       }
 
-      const imagesResult = await createImages(urls, productResult.productId);
+      const imagesResult = await createImages(urls, productResult.productId as string);
       router.push('/dashboard/products')
 
       if (!imagesResult.success) {

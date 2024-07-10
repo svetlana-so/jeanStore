@@ -1,58 +1,73 @@
 'use server';
-
+import { createKysely } from '@vercel/postgres-kysely';
 import { z } from 'zod';
-import { sql } from '@vercel/postgres';
-/* import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation'; */
+import { Database } from './definitions';
+
+
 
 const schema = z.object({
-  brand: z.string(),
+  brand: z.string().toUpperCase(),
   price: z.number(),
-  category: z.string()
+  category: z.string(),
 });
 
 export type FormFields = z.infer<typeof schema>;
+
+const db = createKysely<Database>();
 
 export async function createProduct(data: FormFields) {
   const date = new Date().toISOString().split('T')[0];
 
   try {
-    const result = await sql`
-      INSERT INTO products (
-        brand, size_label, size_waist, size_length, color, fit, material, stretch, 
-        measurement_waist, measurement_hip, measurement_front_crotch, 
-        measurement_back_crotch, measurement_thigh, measurement_inseam, price, category, date
-      ) VALUES (
-        ${data.brand}, 'M', '32', '34', 'Blue', 'Slim', 'Cotton', 'Stretchy', 
-        '30', '40', '10', '12', '22', '32', ${data.price}, ${data.category}, ${date}
-      )
-      RETURNING id;
-    `;
-    const productId = result && result.rows.length > 0 ? result.rows[0].id : null;
-    return { success: true, productId  };
+    const result = await db
+      .insertInto('products')
+      .values({
+        brand: data.brand,
+        size_label: 'M',
+        size_waist: '32',
+        size_length: '34',
+        color: 'Blue',
+        fit: 'Slim',
+        material: 'Cotton',
+        stretch: 'Stretchy',
+        measurement_waist: 30,
+        measurement_hip: 40,
+        measurement_front_crotch: 10,
+        measurement_back_crotch: 12,
+        measurement_thigh: 22,
+        measurement_inseam: 32,
+        price: data.price,
+        category: data.category,
+        date: date,
+      })
+      .returning('id')
+      .executeTakeFirstOrThrow();
+
+    return { success: true, productId: result.id };
   } catch (error) {
     console.error('Database Error:', error);
-    return { success: false, message: 'Database Error: Failed to Create Product.' };
+    return {
+      success: false,
+      message: 'Database Error: Failed to Create Product.',
+    };
   }
 }
 
-
-
 export async function createImages(urls: string[], productId: string) {
   try {
-    for (const url of urls) {
-      await sql`
-      INSERT INTO images (
-        image_url, product_id
-      ) VALUES (
-        ${url}, ${productId}
-      )
-    `;
-    }
-    
+    const insertPromises = urls.map((url) => 
+    db.insertInto('images')
+  .values({
+    image_url: url,
+    product_id: productId
+  }).execute())
+    await Promise.all(insertPromises);
     return { success: true };
   } catch (error) {
     console.error('Database Error:', error);
-    return { success: false, message: 'Database Error: Failed to Create Images.' };
+    return {
+      success: false,
+      message: 'Database Error: Failed to Create Images.',
+    };
   }
 }
