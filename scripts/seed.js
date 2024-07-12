@@ -1,19 +1,20 @@
-const { db } = require('@vercel/postgres');
+import { createKysely } from '@vercel/postgres-kysely';
 const { users } = require('../src/app/lib/placeholder-data');
 const bcrypt = require('bcrypt');
 
-async function seedUsers(client) {
+const db = createKysely();
+
+async function seedUsers() {
   try {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    await db.raw`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
     // Create the "users" table if it doesn't exist
-    const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS users (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        role VARCHAR(255) NOT NULL,
-        email TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
-      );
-    `;
+    await db.schema.createTableIfNotExists('users', (table) => {
+      table.uuid('id').defaultTo(db.raw('uuid_generate_v4()')).primary();
+      table.string('role', 255).notNullable();
+      table.text('email').notNullable().unique();
+      table.text('password').notNullable();
+    });
 
     console.log(`Created "users" table`);
 
@@ -21,18 +22,24 @@ async function seedUsers(client) {
     const insertedUsers = await Promise.all(
       users.map(async (user) => {
         const hashedPassword = await bcrypt.hash(user.password, 10);
-        return client.sql`
-        INSERT INTO users (id, role, email, password)
-        VALUES (${user.id}, ${user.role}, ${user.email}, ${hashedPassword})
-        ON CONFLICT (id) DO NOTHING;
-      `;
+        return db
+          .insertInto('users')
+          .values({
+            id: user.id,
+            role: user.role,
+            email: user.email,
+            password: hashedPassword,
+          })
+          .onConflict('id')
+          .doNothing()
+          .execute();
       }),
     );
 
     console.log(`Seeded ${insertedUsers.length} users`);
 
     return {
-      createTable,
+      createTable: true,
       users: insertedUsers,
     };
   } catch (error) {
@@ -41,108 +48,82 @@ async function seedUsers(client) {
   }
 }
 
-async function seedProducts(client) {
+async function seedProducts() {
   try {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    await db.raw`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
-    const createTable = await client.sql`
-    CREATE TABLE IF NOT EXISTS products (
-    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    brand VARCHAR(255) NOT NULL,
-    size_label VARCHAR(255) NOT NULL,
-    size_waist VARCHAR(255) NOT NULL,
-    size_length VARCHAR(255) NOT NULL,
-    color VARCHAR(255) NOT NULL,
-    fit VARCHAR(255) NOT NULL,
-    material VARCHAR(255) NOT NULL,
-    stretch VARCHAR(255) NOT NULL,
-    measurement_waist FLOAT NOT NULL,
-    measurement_hip FLOAT NOT NULL,
-    measurement_front_crotch FLOAT NOT NULL,
-    measurement_back_crotch FLOAT NOT NULL,
-    measurement_thigh FLOAT NOT NULL,
-    measurement_inseam FLOAT NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    category VARCHAR(255) NOT NULL,
-    date DATE DEFAULT CURRENT_DATE
-    );
-    `;
+    // Create the "products" table if it doesn't exist
+    await db.schema.createTableIfNotExists('products', (table) => {
+      table.uuid('id').defaultTo(db.raw('uuid_generate_v4()')).primary();
+      table.string('brand', 255).notNullable();
+      table.string('size_label', 255).notNullable();
+      table.string('size_waist', 255).notNullable();
+      table.string('size_length', 255).notNullable();
+      table.string('color', 255).notNullable();
+      table.string('fit', 255).notNullable();
+      table.string('material', 255).notNullable();
+      table.string('stretch', 255).notNullable();
+      table.float('measurement_hip').notNullable();
+      table.float('measurement_front_crotch').notNullable();
+      table.float('measurement_back_crotch').notNullable();
+      table.float('measurement_thigh').notNullable();
+      table.float('measurement_inseam').notNullable();
+      table.decimal('price', 10, 2).notNullable();
+      table.string('category', 255).notNullable();
+      table.date('date').defaultTo(db.raw('CURRENT_DATE'));
+      table.boolean('in_stock');
+    });
+
     console.log(`Created "products" table`);
 
     return {
-      createTable,
+      createTable: true,
     };
   } catch (error) {
-    console.error('Error seeding invoices:', error);
+    console.error('Error seeding products:', error);
     throw error;
   }
 }
 
-async function seedImages(client) {
+async function seedImages() {
   try {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    await db.raw`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
-    // Create the "invoices" table if it doesn't exist
-    const createTable = await client.sql`
-    CREATE TABLE IF NOT EXISTS images (
-    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    product_id UUID NOT NULL
-    REFERENCES products(id),
-    image_url VARCHAR(255) NOT NULL
-  );
-`;
+    // Create the "images" table if it doesn't exist
+    await db.schema.createTableIfNotExists('images', (table) => {
+      table.uuid('id').defaultTo(db.raw('uuid_generate_v4()')).primary();
+      table.uuid('product_id').notNullable().references('products.id');
+      table.string('image_url', 255).notNullable();
+    });
 
-    console.log(`Created "invoices" table`);
+    console.log(`Created "images" table`);
 
     return {
-      createTable,
+      createTable: true,
     };
   } catch (error) {
-    console.error('Error seeding invoices:', error);
-    throw error;
-  }
-}
-
-async function seedInvoices(client) {
-  try {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-
-    // Create the "invoices" table if it doesn't exist
-    const createTable = await client.sql`
-    CREATE TABLE IF NOT EXISTS invoices (
-    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    customer_id UUID NOT NULL
-    REFERENCES users(id),
-    amount INT NOT NULL,
-    status VARCHAR(255) NOT NULL,
-    date DATE DEFAULT CURRENT_DATE
-  );
-`;
-
-    console.log(`Created "invoices" table`);
-
-    return {
-      createTable,
-    };
-  } catch (error) {
-    console.error('Error seeding invoices:', error);
+    console.error('Error seeding images:', error);
     throw error;
   }
 }
 
 async function main() {
-  const client = await db.connect();
+  try {
+    await db.connect();
 
-  await seedUsers(client);
-  await seedInvoices(client);
-  await seedProducts(client);
-  await seedImages(client);
-  await client.end();
+    await seedUsers();
+    await seedProducts();
+    await seedImages();
+
+    console.log('Database seeding completed successfully');
+  } catch (error) {
+    console.error(
+      'An error occurred while attempting to seed the database:',
+      error,
+    );
+  } finally {
+    await db.end();
+  }
 }
 
-main().catch((err) => {
-  console.error(
-    'An error occurred while attempting to seed the database:',
-    err,
-  );
-});
+main();

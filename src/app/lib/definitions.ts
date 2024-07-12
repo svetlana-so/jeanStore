@@ -19,6 +19,7 @@ export interface ProductTable {
   price: number;
   category: string;
   date: string;
+  in_stock: boolean;
 }
 
 export interface ImageTable {
