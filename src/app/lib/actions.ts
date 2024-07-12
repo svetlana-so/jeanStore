@@ -37,6 +37,7 @@ export async function createProduct(data: FormFields) {
         price: data.price,
         category: data.category,
         date: date,
+        in_stock: true,
       })
       .returning('id')
       .executeTakeFirstOrThrow();
