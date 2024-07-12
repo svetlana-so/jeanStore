@@ -1,32 +1,32 @@
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-    SelectGroup,
-    SelectLabel
-  } from "@/components/ui/select"
-  
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectGroup,
+  SelectLabel,
+} from '@/components/ui/select';
 
 type SelectFieldProps = {
-    title: string
-}
+  brands: string[];
+};
 
-export const SelectField = ({title}: SelectFieldProps) => {
+export const SelectField = ({ brands }: SelectFieldProps) => {
   return (
     <Select>
-    <SelectTrigger className="w-[280px]">
-    <SelectValue placeholder={`Select ${title}`} />
-    </SelectTrigger>
-    <SelectContent>
-    <SelectGroup>
-        <SelectLabel>{title}</SelectLabel>
-        <SelectItem value="apple">Zara</SelectItem>
-        <SelectItem value="banana">Bershka</SelectItem>
-        
-      </SelectGroup>
-    </SelectContent>
-  </Select>
-  )
-}
+      <SelectTrigger className="w-[280px]">
+        <SelectValue placeholder={`Select brand`} />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {brands.map((brand) => (
+            <SelectItem key={brand} value={brand}>
+              {brand}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+};

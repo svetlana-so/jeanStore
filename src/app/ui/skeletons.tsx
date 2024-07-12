@@ -17,16 +17,13 @@ export function CardSkeleton() {
   );
 }
 
-
-
 export default function Loading() {
-    return (
-        <>
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
-        </>
-      );
-  }
-  
+  return (
+    <>
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+    </>
+  );
+}

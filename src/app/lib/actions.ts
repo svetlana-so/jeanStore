@@ -3,8 +3,6 @@ import { createKysely } from '@vercel/postgres-kysely';
 import { z } from 'zod';
 import { Database } from './definitions';
 
-
-
 const schema = z.object({
   brand: z.string().toUpperCase(),
   price: z.number(),
@@ -55,12 +53,15 @@ export async function createProduct(data: FormFields) {
 
 export async function createImages(urls: string[], productId: string) {
   try {
-    const insertPromises = urls.map((url) => 
-    db.insertInto('images')
-  .values({
-    image_url: url,
-    product_id: productId
-  }).execute())
+    const insertPromises = urls.map((url) =>
+      db
+        .insertInto('images')
+        .values({
+          image_url: url,
+          product_id: productId,
+        })
+        .execute(),
+    );
     await Promise.all(insertPromises);
     return { success: true };
   } catch (error) {

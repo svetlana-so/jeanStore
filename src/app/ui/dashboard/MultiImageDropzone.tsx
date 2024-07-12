@@ -7,7 +7,6 @@ import * as React from 'react';
 import { useDropzone, type DropzoneOptions } from 'react-dropzone';
 import { twMerge } from 'tailwind-merge';
 
-
 const variants = {
   base: 'relative rounded-md aspect-square flex justify-center items-center flex-col cursor-pointer min-h-[150px] min-w-[200px] border border-dashed border-gray-400 dark:border-gray-300 transition-colors duration-200 ease-in-out',
   image:
@@ -32,7 +31,7 @@ type InputProps = {
   onFilesAdded?: (addedFiles: FileState[]) => void | Promise<void>;
   disabled?: boolean;
   dropzoneOptions?: Omit<DropzoneOptions, 'disabled'>;
-  onCancel: () => void; 
+  onCancel: () => void;
 };
 
 const ERROR_MESSAGES = {
@@ -52,7 +51,15 @@ const ERROR_MESSAGES = {
 
 const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { dropzoneOptions, value, className, disabled, onChange, onFilesAdded, onCancel },
+    {
+      dropzoneOptions,
+      value,
+      className,
+      disabled,
+      onChange,
+      onFilesAdded,
+      onCancel,
+    },
     ref,
   ) => {
     const [customError, setCustomError] = React.useState<string>();
@@ -153,14 +160,12 @@ const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
               key={index}
               className={variants.image + ' relative aspect-square h-full'}
             >
-              
               <img
                 className="h-full w-full rounded-md object-cover"
                 src={imageUrls[index]}
                 alt={typeof file === 'string' ? file : file.name}
               />
-            
-              
+
               {/* Progress Bar */}
               {typeof progress === 'number' && (
                 <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-md bg-black bg-opacity-70">
@@ -202,7 +207,9 @@ const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                 <UploadCloudIcon className="mb-2 h-7 w-7" />
                 <div className="text-gray-700">drag & drop to upload</div>
                 <div className="mt-3">
-                  <Button className='bg-green-600' disabled={disabled}>select</Button>
+                  <Button className="bg-green-600" disabled={disabled}>
+                    select
+                  </Button>
                 </div>
               </div>
             </div>
@@ -226,7 +233,7 @@ const Button = React.forwardRef<
     <button
       className={twMerge(
         // base
-        'focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50',
+        'inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
         // color
         'border border-gray-400 text-gray-400 shadow hover:bg-gray-100 hover:text-gray-500 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700',
         // size

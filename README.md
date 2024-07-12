@@ -1,6 +1,7 @@
 // TODO
+
 - add proper pagination
-- add login 
+- add login
 - dashboard style
 - add col in_stock
 - all products queries ?

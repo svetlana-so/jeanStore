@@ -1,7 +1,7 @@
-import { Generated } from 'kysely'
+import { Generated } from 'kysely';
 
 export interface ProductTable {
-  id: Generated<string>
+  id: Generated<string>;
   brand: string;
   size_label: string;
   size_waist: string;
@@ -22,29 +22,22 @@ export interface ProductTable {
 }
 
 export interface ImageTable {
-  id: Generated<string>
+  id: Generated<string>;
   product_id: string;
   image_url: string;
 }
 
 export interface UserTable {
-  id: Generated<string>
+  id: Generated<string>;
   name: string;
   email: string;
 }
-
-
 
 export interface Database {
   products: ProductTable;
   users: UserTable;
   images: ImageTable;
 }
-
-
-
-
-
 
 export type User = {
   id: string;
@@ -71,4 +64,3 @@ export interface ProductWithImage {
   price: number;
   images: Image[];
 }
-

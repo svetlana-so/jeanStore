@@ -135,8 +135,8 @@ async function main() {
 
   await seedUsers(client);
   await seedInvoices(client);
-  await seedProducts(client)
-  await seedImages(client)
+  await seedProducts(client);
+  await seedImages(client);
   await client.end();
 }
 

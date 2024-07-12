@@ -19,9 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <div className="w-full flex-none p-4">
-        <NavBar />
-      </div>
+        <div className="w-full flex-none p-4">
+          <NavBar />
+        </div>
         <EdgeStoreProvider>{children}</EdgeStoreProvider>
       </body>
     </html>

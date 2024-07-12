@@ -2,6 +2,11 @@
 
 import { sql } from '@vercel/postgres';
 import { ProductWithImage } from './definitions';
+import { createKysely } from '@vercel/postgres-kysely';
+import { Database } from './definitions';
+import { getUniqueValues } from './utils';
+
+const db = createKysely<Database>();
 
 // rewrite to kysely
 export async function fetchProducts() {
@@ -75,5 +80,63 @@ export async function fetchFilteredProducts(
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch products.');
+  }
+}
+export async function fetchAllAttributes() {
+  try {
+    const data = await db
+      .selectFrom('products')
+      .select([
+        'size_label',
+        'color',
+        'brand',
+        'size_waist',
+        'size_length',
+        'material',
+        'stretch',
+        'measurement_hip',
+        'measurement_front_crotch',
+        'measurement_back_crotch',
+        'measurement_thigh',
+        'measurement_inseam',
+      ])
+      .execute();
+
+    const uniqSizes = getUniqueValues(data, 'size_label');
+    const uniqColors = getUniqueValues(data, 'color');
+    const uniqBrands = getUniqueValues(data, 'brand');
+    const sizeWaist = getUniqueValues(data, 'size_waist');
+    const sizeLength = getUniqueValues(data, 'size_length');
+    const materials = getUniqueValues(data, 'material');
+    const stretches = getUniqueValues(data, 'stretch');
+    const measurementHip = getUniqueValues(data, 'measurement_hip');
+    const measurementFrontCrotch = getUniqueValues(
+      data,
+      'measurement_front_crotch',
+    );
+    const measurementBackCrotch = getUniqueValues(
+      data,
+      'measurement_back_crotch',
+    );
+    const measurementThigh = getUniqueValues(data, 'measurement_thigh');
+    const measurementInseam = getUniqueValues(data, 'measurement_inseam');
+
+    return {
+      sizes: uniqSizes,
+      colors: uniqColors,
+      brands: uniqBrands,
+      sizeWaist,
+      sizeLength,
+      materials,
+      stretches,
+      measurementHip,
+      measurementFrontCrotch,
+      measurementBackCrotch,
+      measurementThigh,
+      measurementInseam,
+    };
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch product attributes.');
   }
 }
