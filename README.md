@@ -1,6 +1,6 @@
 // TODO
 
-- add proper pagination
+- add pagination
 - add login
 - dashboard style
 - add col in_stock
