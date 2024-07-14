@@ -1,3 +1,4 @@
+export const categories = ['Women', 'Men', 'Kids'];
 export const waist = [
   '23',
   '24',

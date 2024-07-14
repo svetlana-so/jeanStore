@@ -4,8 +4,8 @@ import { z } from 'zod';
 import { Database } from './definitions';
 
 const schema = z.object({
-  brand: z.string().toUpperCase(),
-  price: z.number(),
+  brand: z.string().min(1, 'Brand is required'),
+  price: z.number().min(0, 'Price must be a positive number'),
   category: z.string(),
 });
 

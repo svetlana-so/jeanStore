@@ -10,8 +10,8 @@ import { useState } from 'react';
 import { createProduct, createImages, FormFields } from '@/app/lib/actions';
 import { Button } from '../button';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import {categories} from '@/app/lib/jeansDefinitions'
 
-const categories = ['Women', 'Men', 'Kids'];
 
 export default function Form() {
   const router = useRouter();

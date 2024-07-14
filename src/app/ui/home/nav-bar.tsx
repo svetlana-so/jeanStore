@@ -87,7 +87,8 @@ export default function NavBar() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
+          <Button as={Link} color="primary" href="#" variant="flat" 
+           onClick={() => router.push('/dashboard')}>
             Admin
           </Button>
         </NavbarItem>
