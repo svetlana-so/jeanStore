@@ -2,14 +2,21 @@
 import { createKysely } from '@vercel/postgres-kysely';
 import { z } from 'zod';
 import { Database } from './definitions';
+import { signIn } from '@/../../auth';
+import { AuthError } from 'next-auth';
 
 const schema = z.object({
   brand: z.string().min(1, 'Brand is required'),
   price: z.number().min(0, 'Price must be a positive number'),
   category: z.string(),
 });
-
 export type FormFields = z.infer<typeof schema>;
+
+const loginSchema = z.object({
+  email: z.string().min(1, 'Email is required'),
+  password: z.string().min(8, 'Password is required'),
+});
+export type LoginFormFields = z.infer<typeof loginSchema>;
 
 const db = createKysely<Database>();
 
@@ -71,5 +78,23 @@ export async function createImages(urls: string[], productId: string) {
       success: false,
       message: 'Database Error: Failed to Create Images.',
     };
+  }
+}
+
+export async function authenticate(
+  data: LoginFormFields,
+) {
+  try {
+    await signIn('credentials', data);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials!';
+        default:
+          return 'Invalid credentials!';
+      }
+    }
+    throw error;
   }
 }

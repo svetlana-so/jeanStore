@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import JeansList from '../ui/products/jeansList';
 import { fetchAllAttributes, fetchProductsByCategory } from '../lib/data';
 import { Filter } from '../ui/products/filter';
+import NavBar from '../ui/home/nav-bar';
 
 export const metadata: Metadata = {
   title: 'All Product By Category',
@@ -32,7 +33,11 @@ export default async function Page({
   } = await fetchAllAttributes();
 
   return (
-    <div className="mx-4">
+    <>
+    <div className="w-full flex-none p-4">
+          <NavBar />
+        </div>
+        <div className="mx-4">
       <Filter
         sizes={sizes}
         colors={colors}
@@ -48,6 +53,7 @@ export default async function Page({
         measurementInseam={measurementInseam}
       />
       <JeansList products={products} />
-    </div>
+    </div></>
+   
   );
 }

@@ -6,9 +6,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
   Link,
   Button,
   DropdownItem,
@@ -18,6 +15,7 @@ import {
   Avatar,
 } from '@nextui-org/react';
 import clsx from 'clsx';
+import { ModeToggle } from '@/components/ui/mode-toggle';
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -63,7 +61,7 @@ export default function NavBar() {
         <NavbarBrand>
           <button
             onClick={() => router.push('/')}
-            className="rounded-lg bg-cyan-100 p-2 font-bold text-inherit"
+            className="rounded-lg bg-stone-300 p-2 font-bold text-inherit"
           >
             ReJeans
           </button>
@@ -87,10 +85,11 @@ export default function NavBar() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat" 
-           onClick={() => router.push('/dashboard')}>
+          <Button as={Link} color="primary" href="login" variant="flat" 
+           >
             Admin
           </Button>
+          <ModeToggle/>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
