@@ -8,9 +8,9 @@ import {
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { authenticate } from '@/app/lib/actions';
 import { LoginFormFields } from '@/app/lib/actions';
 import { useRouter } from 'next/navigation';
+import {authenticate} from '@/app/lib/actions';
 
 
 
@@ -20,16 +20,8 @@ export default function LoginForm() {
  
   const onSubmit: SubmitHandler<LoginFormFields> = async (data) => {
     try {
-      const result = await authenticate(data);
-      
-      if (typeof result === 'string') {
-        setError('root', {
-          type: 'manual',
-          message: result,
-        });
-        return;
-      }
-      
+      await authenticate(data)
+      router.push('/dashboard');
     } catch (error: any) {
       setError('root', {
         type: 'manual',

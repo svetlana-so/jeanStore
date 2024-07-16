@@ -2,8 +2,8 @@
 import { createKysely } from '@vercel/postgres-kysely';
 import { z } from 'zod';
 import { Database } from './definitions';
-import { signIn } from '@/../../auth';
-import { AuthError } from 'next-auth';
+import { signIn, encrypt } from '@/../../auth';
+import { cookies } from 'next/headers';
 
 const schema = z.object({
   brand: z.string().min(1, 'Brand is required'),
@@ -81,20 +81,15 @@ export async function createImages(urls: string[], productId: string) {
   }
 }
 
-export async function authenticate(
-  data: LoginFormFields,
-) {
+export async function authenticate(data: LoginFormFields) {
   try {
-    await signIn('credentials', data);
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials!';
-        default:
-          return 'Invalid credentials!';
-      }
-    }
-    throw error;
+    const admin = await signIn(data);
+    
+    const expires = new Date(Date.now() + 10 * 1000);
+    const session = await encrypt({ admin, expires });
+
+    cookies().set('JeansSession', session, { expires, httpOnly: true });
+  } catch (error: any) {
+    throw new Error(error.message || 'Error logging in');
   }
 }

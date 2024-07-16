@@ -1,12 +1,16 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { authConfig } from './auth.config';
+/* import { authConfig } from './auth.config'; */
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
+import { SignJWT, jwtVerify } from 'jose';
 
-async function getUser(email: string): Promise<User | undefined> {
+const secret = process.env.AUTH_SECRET;
+const key = new TextEncoder().encode(secret);
+
+export async function getUser(email: string): Promise<User | undefined> {
   try {
     const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
     return user.rows[0];
@@ -15,42 +19,39 @@ async function getUser(email: string): Promise<User | undefined> {
     throw new Error('Failed to fetch user.');
   }
 }
+export async function encrypt(payload: any) {
+  return await new SignJWT(payload)
+    .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
+    .setExpirationTime('10s')
+    .sign(key);
+}
 
-export const { auth, signIn, signOut } = NextAuth({
-  ...authConfig,
-  providers: [
-    Credentials({
-      credentials: {
-        email: {
-          label: 'Email',
-          type: 'email',
-          placeholder: 'jsmith@example.com',
-        },
-        password: { label: 'Password', type: 'password' },
-      },
-      async authorize(credentials) {
-        const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
-          .safeParse(credentials);
-        if (!parsedCredentials.success) {
-          console.log('Invalid credentials format');
-          return null;
-        }
-        const { email, password } = parsedCredentials.data;
-        const user = await getUser(email);
-        if (!user) {
-          console.log('No user found');
-          return null;
-        }
-        const passwordsMatch = await bcrypt.compare(password, user.password);
-        if (!passwordsMatch) {
-          console.log('Password does not match');
-          return null;
-        }
+export async function signIn(data: any) {
+  const parsedCredentials = z
+    .object({ email: z.string().email(), password: z.string().min(6) })
+    .safeParse(data);
 
-        console.log('User authenticated successfully', user);
-        return user;
-      },
-    }),
-  ],
-});
+  if (!parsedCredentials.success) {
+    throw new Error('Invalid credentials format');
+  }
+
+  const { email, password } = parsedCredentials.data;
+  const user = await getUser(email);
+
+  if (!user) {
+    throw new Error('No user found');
+  }
+
+  const passwordsMatch = await bcrypt.compare(password, user.password);
+  if (!passwordsMatch) {
+    throw new Error('Password does not match');
+  }
+
+  if (user.role !== 'Admin') {
+    throw new Error('User is not an admin');
+  }
+
+  console.log('User authenticated successfully', user);
+  return user;
+}
