@@ -56,7 +56,6 @@ async function seedProducts(client) {
     fit VARCHAR(255) NOT NULL,
     material VARCHAR(255) NOT NULL,
     stretch VARCHAR(255) NOT NULL,
-    measurement_waist FLOAT NOT NULL,
     measurement_hip FLOAT NOT NULL,
     measurement_front_crotch FLOAT NOT NULL,
     measurement_back_crotch FLOAT NOT NULL,

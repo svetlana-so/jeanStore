@@ -13,7 +13,7 @@ type CardProps = {
 export const Card: React.FC<CardProps> = ({ product }) => {
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="font-bold">{product.brand}</h2>
+      <h2 className="font-bold dark:text-gray-200">{product.brand}</h2>
       <Carousel>
         {product.images.map((image) => (
           <div key={image.id} className="flex flex-col gap-2">
@@ -22,7 +22,9 @@ export const Card: React.FC<CardProps> = ({ product }) => {
               alt={`Image of ${product.brand}`}
               className="h-auto w-full object-cover"
             />
-            <p className="flex text-start">SEK {product.price}</p>
+            <p className="flex text-start dark:text-gray-200">
+              SEK {product.price}
+            </p>
           </div>
         ))}
       </Carousel>

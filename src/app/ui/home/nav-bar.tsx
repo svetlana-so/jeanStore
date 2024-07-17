@@ -43,9 +43,10 @@ export default function NavBar() {
               <DropdownItem
                 key={link.name}
                 className={clsx(
-                  'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-cyan-600 md:flex-none md:justify-start md:p-2 md:px-3',
+                  'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium text-gray-900 hover:bg-sky-100 hover:text-orange-400 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-orange-400 md:flex-none md:justify-start md:p-2 md:px-3',
                   {
-                    'text-blue-600': pathname === link.href,
+                    'text-orange-400 dark:text-orange-400':
+                      pathname === link.href,
                   },
                 )}
                 onClick={() => handleMenuItemClick(link.href)}
@@ -61,7 +62,7 @@ export default function NavBar() {
         <NavbarBrand>
           <button
             onClick={() => router.push('/')}
-            className="rounded-lg bg-stone-300 p-2 font-bold text-inherit"
+            className="rounded-lg bg-orange-400 p-2 font-bold text-inherit dark:bg-orange-400 dark:text-gray-200"
           >
             ReJeans
           </button>
@@ -74,8 +75,8 @@ export default function NavBar() {
             <Link
               color="foreground"
               href={link.href}
-              className={clsx({
-                'text-cyan-600': pathname === link.href,
+              className={clsx('dark:text-gray-200', {
+                'text-orange-400': pathname === link.href,
               })}
             >
               {link.name}
@@ -85,7 +86,13 @@ export default function NavBar() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button as={Link} color="primary" href="login" variant="flat">
+          <Button
+            className="dark:text-gray-200"
+            as={Link}
+            color="primary"
+            href="login"
+            variant="flat"
+          >
             Admin
           </Button>
           <ModeToggle />

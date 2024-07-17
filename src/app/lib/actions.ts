@@ -1,16 +1,11 @@
 'use server';
+
 import { createKysely } from '@vercel/postgres-kysely';
 import { z } from 'zod';
 import { Database } from './definitions';
 import { signIn, encrypt } from '@/../../auth';
 import { cookies } from 'next/headers';
-
-const schema = z.object({
-  brand: z.string().min(1, 'Brand is required'),
-  price: z.number().min(0, 'Price must be a positive number'),
-  category: z.string(),
-});
-export type FormFields = z.infer<typeof schema>;
+import { FormFields } from './definitions';
 
 const loginSchema = z.object({
   email: z.string().min(1, 'Email is required'),
@@ -28,19 +23,18 @@ export async function createProduct(data: FormFields) {
       .insertInto('products')
       .values({
         brand: data.brand,
-        size_label: 'M',
-        size_waist: '32',
-        size_length: '34',
-        color: 'Blue',
-        fit: 'Slim',
-        material: 'Cotton',
-        stretch: 'Stretchy',
-        measurement_waist: 30,
-        measurement_hip: 40,
-        measurement_front_crotch: 10,
-        measurement_back_crotch: 12,
-        measurement_thigh: 22,
-        measurement_inseam: 32,
+        size_label: data.sizeLabel,
+        size_waist: data.waist,
+        size_length: data.length,
+        color: data.color,
+        fit: data.fit,
+        material: data.material,
+        stretch: data.stretch,
+        measurement_hip: data.hipMeasurement,
+        measurement_front_crotch: data.frontCrotchMeasurement,
+        measurement_back_crotch: data.backCrotchMeasurement,
+        measurement_thigh: data.thighMeasurement,
+        measurement_inseam: data.inseamMeasurement,
         price: data.price,
         category: data.category,
         date: date,
@@ -85,11 +79,15 @@ export async function authenticate(data: LoginFormFields) {
   try {
     const admin = await signIn(data);
 
-    const expires = new Date(Date.now() + 10 * 1000);
+    const expires = new Date(Date.now() + 30 * 60 * 1000);
     const session = await encrypt({ admin, expires });
 
     cookies().set('JeansSession', session, { expires, httpOnly: true });
   } catch (error: any) {
     throw new Error(error.message || 'Error logging in');
   }
+}
+
+export async function logout() {
+  cookies().set('JeansSession', '', { expires: new Date(0) });
 }

@@ -48,16 +48,18 @@ export const Filter = ({
     <>
       <div>
         <Drawer>
-          <DrawerTrigger className="flex flex-row items-center gap-4 rounded-md bg-sky-200 p-2">
-            Filter <IoFilterOutline />
+          <DrawerTrigger className="flex flex-row items-center gap-4 rounded-md bg-orange-300 p-4">
+            <IoFilterOutline />
           </DrawerTrigger>
 
-          <DrawerContent className="">
+          <DrawerContent className="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-200">
             <DrawerHeader>
-              <DrawerTitle>Women Hardcoded</DrawerTitle>
+              <DrawerTitle className="dark:text-gray-300">
+                Women Hardcoded
+              </DrawerTitle>
             </DrawerHeader>
 
-            <ScrollArea className="m-2 overflow-y-auto">
+            <ScrollArea className="m-2 overflow-y-auto text-gray-700 dark:text-gray-300">
               <div>
                 <SelectField brands={brands} />
               </div>
@@ -108,7 +110,9 @@ export const Filter = ({
             </ScrollArea>
 
             <DrawerFooter>
-              <Button>Apply</Button>
+              <Button className="bg-orange-400 hover:bg-orange-500">
+                Apply
+              </Button>
               <DrawerClose>
                 <Button variant="outline">Cancel</Button>
               </DrawerClose>

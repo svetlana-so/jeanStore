@@ -15,7 +15,6 @@ export async function getUser(email: string): Promise<User | undefined> {
     const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
     return user.rows[0];
   } catch (error) {
-    console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
   }
 }
@@ -51,7 +50,5 @@ export async function signIn(data: any) {
   if (user.role !== 'Admin') {
     throw new Error('User is not an admin');
   }
-
-  console.log('User authenticated successfully', user);
   return user;
 }
