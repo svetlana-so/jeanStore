@@ -34,26 +34,26 @@ export default async function Page({
 
   return (
     <>
-    <div className="w-full flex-none p-4">
-          <NavBar />
-        </div>
-        <div className="mx-4">
-      <Filter
-        sizes={sizes}
-        colors={colors}
-        brands={brands}
-        sizeWaist={sizeWaist}
-        sizeLength={sizeLength}
-        materials={materials}
-        stretches={stretches}
-        measurementHip={measurementHip}
-        measurementFrontCrotch={measurementFrontCrotch}
-        measurementBackCrotch={measurementBackCrotch}
-        measurementThigh={measurementThigh}
-        measurementInseam={measurementInseam}
-      />
-      <JeansList products={products} />
-    </div></>
-   
+      <div className="w-full flex-none p-4">
+        <NavBar />
+      </div>
+      <div className="mx-4">
+        <Filter
+          sizes={sizes}
+          colors={colors}
+          brands={brands}
+          sizeWaist={sizeWaist}
+          sizeLength={sizeLength}
+          materials={materials}
+          stretches={stretches}
+          measurementHip={measurementHip}
+          measurementFrontCrotch={measurementFrontCrotch}
+          measurementBackCrotch={measurementBackCrotch}
+          measurementThigh={measurementThigh}
+          measurementInseam={measurementInseam}
+        />
+        <JeansList products={products} />
+      </div>
+    </>
   );
 }

@@ -4,7 +4,6 @@ import { EdgeStoreProvider } from '@/app/lib/edgestore';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 
-
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -17,16 +16,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    return (
+  return (
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <EdgeStoreProvider>{children}</EdgeStoreProvider>
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <EdgeStoreProvider>{children}</EdgeStoreProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -7,8 +7,8 @@ export default async function Home() {
   return (
     <main>
       <div className="w-full flex-none p-4">
-          <NavBar />
-        </div>
+        <NavBar />
+      </div>
       <Suspense fallback={<Loading />}>
         <AllJeansList />
       </Suspense>

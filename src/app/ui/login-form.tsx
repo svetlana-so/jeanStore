@@ -10,17 +10,20 @@ import { Button } from './button';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoginFormFields } from '@/app/lib/actions';
 import { useRouter } from 'next/navigation';
-import {authenticate} from '@/app/lib/actions';
-
-
+import { authenticate } from '@/app/lib/actions';
 
 export default function LoginForm() {
   const router = useRouter();
-  const { register, handleSubmit, setError, formState: {errors, isSubmitting}} = useForm<LoginFormFields>()
- 
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormFields>();
+
   const onSubmit: SubmitHandler<LoginFormFields> = async (data) => {
     try {
-      await authenticate(data)
+      await authenticate(data);
       router.push('/dashboard');
     } catch (error: any) {
       setError('root', {
@@ -28,15 +31,12 @@ export default function LoginForm() {
         message: error.message || 'Error logging in',
       });
     }
-    
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className="mb-3 text-2xl">
-          Please log in to continue.
-        </h1>
+        <h1 className="mb-3 text-2xl">Please log in to continue.</h1>
         <div className="w-full">
           <div>
             <label
@@ -47,9 +47,9 @@ export default function LoginForm() {
             </label>
             <div className="relative">
               <input
-              {...register('email', {
-                required: 'Is required',
-              })}
+                {...register('email', {
+                  required: 'Is required',
+                })}
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="email"
                 type="email"
@@ -69,9 +69,9 @@ export default function LoginForm() {
             </label>
             <div className="relative">
               <input
-              {...register('password', {
-                required: 'Password is required',
-              })}
+                {...register('password', {
+                  required: 'Password is required',
+                })}
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="password"
                 type="password"
@@ -85,14 +85,15 @@ export default function LoginForm() {
           </div>
         </div>
         <Button className="mt-4 w-full">
-        {isSubmitting ? 'Loading' : 'Login'} <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+          {isSubmitting ? 'Loading' : 'Login'}{' '}
+          <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
         <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
           aria-atomic="true"
         >
-        {errors.root && (
+          {errors.root && (
             <div className="text-red-400">{errors.root.message}</div>
           )}
         </div>

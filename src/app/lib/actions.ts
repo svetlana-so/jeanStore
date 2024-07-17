@@ -84,7 +84,7 @@ export async function createImages(urls: string[], productId: string) {
 export async function authenticate(data: LoginFormFields) {
   try {
     const admin = await signIn(data);
-    
+
     const expires = new Date(Date.now() + 10 * 1000);
     const session = await encrypt({ admin, expires });
 

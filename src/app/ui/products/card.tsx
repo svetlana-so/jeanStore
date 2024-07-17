@@ -16,14 +16,14 @@ export const Card: React.FC<CardProps> = ({ product }) => {
       <h2 className="font-bold">{product.brand}</h2>
       <Carousel>
         {product.images.map((image) => (
-          <div key={image.id} className='flex flex-col gap-2'>
+          <div key={image.id} className="flex flex-col gap-2">
             <img
-          src={image.url}
-          alt={`Image of ${product.brand}`}
-          className="h-auto w-full object-cover"
-        />
-        <p className=' flex text-start'>SEK {product.price}</p>
-        </div>
+              src={image.url}
+              alt={`Image of ${product.brand}`}
+              className="h-auto w-full object-cover"
+            />
+            <p className="flex text-start">SEK {product.price}</p>
+          </div>
         ))}
       </Carousel>
     </div>

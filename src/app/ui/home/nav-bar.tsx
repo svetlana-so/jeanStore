@@ -85,11 +85,10 @@ export default function NavBar() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button as={Link} color="primary" href="login" variant="flat" 
-           >
+          <Button as={Link} color="primary" href="login" variant="flat">
             Admin
           </Button>
-          <ModeToggle/>
+          <ModeToggle />
         </NavbarItem>
       </NavbarContent>
     </Navbar>
