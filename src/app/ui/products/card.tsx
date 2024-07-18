@@ -8,11 +8,13 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 type CardProps = {
   product: ProductWithImage;
+  onClick: () => void
+ 
 };
 
-export const Card: React.FC<CardProps> = ({ product }) => {
+export const Card: React.FC<CardProps> = ({ product, onClick }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4" onClick={onClick}>
       <h2 className="font-bold dark:text-gray-200">{product.brand}</h2>
       <Carousel>
         {product.images.map((image) => (

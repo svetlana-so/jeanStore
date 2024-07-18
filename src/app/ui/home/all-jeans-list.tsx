@@ -1,19 +1,26 @@
+"use client"
 import React from 'react';
-import { fetchProducts } from '@/app/lib/data';
 import { Card } from '@/app/ui/products/card';
 
-interface JeansListProps {
-  category: string;
-  currentPage: number;
-}
+import type { ProductWithImage } from '../../lib/definitions';
+import { useRouter } from 'next/navigation';
 
-export default async function AllJeansList() {
-  const products = await fetchProducts();
+type AllJeansListProps = {
+  products: ProductWithImage[];
+  basePath: string;
+};
 
+export default function AllJeansList({products, basePath}: AllJeansListProps) {
+
+  const router = useRouter()
+  
+  const handleCardClick = (id: string) => {
+    router.push(`${basePath}/${id}`);
+  };
   return (
-    <div className="m-4 grid justify-center gap-4 sm:grid-cols-2 lg:grid-cols-6">
+    <div className="m-4 grid justify-center gap-4 sm:grid-cols-2 lg:grid-cols-6 cursor-pointer">
       {products.map((product) => (
-        <Card key={product.id} product={product} />
+        <Card key={product.id} product={product} onClick={() => handleCardClick(product.id)}/>
       ))}
     </div>
   );

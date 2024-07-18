@@ -51,19 +51,31 @@ export type User = {
 export type Product = {
   id: string;
   brand: string;
-  //...
+  sizeLabel: string; 
+  waist: string;
+  length: string;
+  color: string;
+  fit: string;
+  material: string;
+  stretch: string;
+  hipMeasurement: number;
+  frontCrotchMeasurement: number;
+  backCrotchMeasurement: number;
+  thighMeasurement: number;
+  inseamMeasurement: number;
+  price: number;
+  category: string;
   date: string;
+  in_stock?: boolean;
 };
+
 
 export type Image = {
   id: string;
   url: string;
 };
 
-export interface ProductWithImage {
-  id: number;
-  brand: string;
-  price: number;
+export interface ProductWithImage extends Product {
   images: Image[];
 }
 

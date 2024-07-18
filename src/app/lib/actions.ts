@@ -1,11 +1,14 @@
 'use server';
-
+/* import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation'; */
 import { createKysely } from '@vercel/postgres-kysely';
 import { z } from 'zod';
 import { Database } from './definitions';
 import { signIn, encrypt } from '@/../../auth';
 import { cookies } from 'next/headers';
 import { FormFields } from './definitions';
+import { select } from '@nextui-org/theme';
+
 
 const loginSchema = z.object({
   email: z.string().min(1, 'Email is required'),
@@ -74,6 +77,42 @@ export async function createImages(urls: string[], productId: string) {
     };
   }
 }
+
+export async function fetchProductById(id: string) {
+  try {
+    const product = await db.selectFrom('products')
+      .selectAll()
+      .where('id', '=', id)
+      .executeTakeFirstOrThrow();
+console.log(product)
+    return product;
+  } catch (error) {
+    console.error('Database Error:', error);
+    return { message: 'Database Error: Failed to fetch product.' };
+  }
+}
+
+export async function updateProduct(id: string,
+  formData: FormData,) {
+    /* const { ... } = formData
+    try {
+      await db
+      .updateTable('products')
+      .set({
+        
+      })
+      .where('id', '=', id)
+      .executeTakeFirst()
+    } catch (error) {
+      return { message: 'Database Error: Failed to Update Product.' };
+    }
+   
+    revalidatePath('/dashboard/products');
+    redirect('/dashboard/products'); */
+  }
+
+
+
 
 export async function authenticate(data: LoginFormFields) {
   try {
