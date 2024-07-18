@@ -13,7 +13,7 @@ export default async function Home() {
         <NavBar />
       </div>
       <Suspense fallback={<Loading />}>
-        <AllJeansList products={products} basePath={basePath}/>
+        <AllJeansList products={products} basePath={basePath} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center"></div>
     </main>

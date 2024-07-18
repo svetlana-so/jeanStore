@@ -46,20 +46,49 @@ export const measurementInseam = [28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38];
 
 export const sizeLabel = [
   // Kids sizes
-  '2T', '3T', '4T', '4', '5', '6', '6X', '7', '8', '10', '12', '14', '16', '18', '20',
+  '2T',
+  '3T',
+  '4T',
+  '4',
+  '5',
+  '6',
+  '6X',
+  '7',
+  '8',
+  '10',
+  '12',
+  '14',
+  '16',
+  '18',
+  '20',
   // Women's sizes
-  'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL',
+  'XXS',
+  'XS',
+  'S',
+  'M',
+  'L',
+  'XL',
+  'XXL',
+  'XXXL',
   // Men's sizes
-  '28', '29', '30', '31', '32', '33', '34', '36', '38', '40', '42', '44', '46', '48', '50'
+  '28',
+  '29',
+  '30',
+  '31',
+  '32',
+  '33',
+  '34',
+  '36',
+  '38',
+  '40',
+  '42',
+  '44',
+  '46',
+  '48',
+  '50',
 ];
 
-export const fitOptions = [
-  'Slim',
-  'Regular',
-  'Skinny',
-  'Straight',
-  'Relaxed',
-];
+export const fitOptions = ['Slim', 'Regular', 'Skinny', 'Straight', 'Relaxed'];
 
 export const materialOptions = [
   'Cotton',
@@ -69,8 +98,4 @@ export const materialOptions = [
   'Wool',
 ];
 
-export const stretchOptions = [
-  'Stretchy',
-  'Non-stretch',
-  'High Stretch',
-];
+export const stretchOptions = ['Stretchy', 'Non-stretch', 'High Stretch'];

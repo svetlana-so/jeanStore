@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { Button } from '../button';
 import type { Product } from '@/app/lib/definitions';
@@ -21,13 +21,9 @@ import { useForm } from 'react-hook-form';
 
 interface EditFormProps {
   product: Product;
-  
 }
 
-export const EditForm: React.FC<EditFormProps> = ({
-  product,
-  
-}) => {
+export const EditForm: React.FC<EditFormProps> = ({ product }) => {
   const {
     register,
     handleSubmit,
@@ -36,7 +32,7 @@ export const EditForm: React.FC<EditFormProps> = ({
   } = useForm();
 
   return (
-    <form >
+    <form>
       <div className="flex flex-col gap-2">
         {/* Brand */}
         <div className="mb-4">
@@ -72,7 +68,7 @@ export const EditForm: React.FC<EditFormProps> = ({
               <option
                 key={size}
                 value={size}
-                className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                className="bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100"
               >
                 {size}
               </option>
@@ -122,7 +118,10 @@ export const EditForm: React.FC<EditFormProps> = ({
 
         {/* Waist */}
         <div className="mb-4">
-          <label htmlFor="waist" className="block text-sm font-medium dark:text-gray-200">
+          <label
+            htmlFor="waist"
+            className="block text-sm font-medium dark:text-gray-200"
+          >
             Waist
           </label>
           <select
@@ -144,7 +143,10 @@ export const EditForm: React.FC<EditFormProps> = ({
 
         {/* Color */}
         <div className="mb-4">
-          <label htmlFor="color" className="block text-sm font-medium dark:text-gray-200">
+          <label
+            htmlFor="color"
+            className="block text-sm font-medium dark:text-gray-200"
+          >
             Color
           </label>
           <select
@@ -232,7 +234,10 @@ export const EditForm: React.FC<EditFormProps> = ({
 
         {/* Measurement Length */}
         <div className="mb-4">
-          <label htmlFor="length" className="block text-sm font-medium dark:text-gray-200">
+          <label
+            htmlFor="length"
+            className="block text-sm font-medium dark:text-gray-200"
+          >
             Length (in)
           </label>
           <select
@@ -254,7 +259,10 @@ export const EditForm: React.FC<EditFormProps> = ({
 
         {/* Measurement Hip */}
         <div className="mb-4">
-          <label htmlFor="hipMeasurement" className="block text-sm font-medium dark:text-gray-200">
+          <label
+            htmlFor="hipMeasurement"
+            className="block text-sm font-medium dark:text-gray-200"
+          >
             Hip (in)
           </label>
           <select
@@ -326,7 +334,10 @@ export const EditForm: React.FC<EditFormProps> = ({
 
         {/* Measurement Thigh */}
         <div className="mb-4">
-          <label htmlFor="thighMeasurement" className="block text-sm font-medium dark:text-gray-200">
+          <label
+            htmlFor="thighMeasurement"
+            className="block text-sm font-medium dark:text-gray-200"
+          >
             Thigh (in)
           </label>
           <select

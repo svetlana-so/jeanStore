@@ -8,8 +8,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 type CardProps = {
   product: ProductWithImage;
-  onClick: () => void
- 
+  onClick?: () => void;
 };
 
 export const Card: React.FC<CardProps> = ({ product, onClick }) => {

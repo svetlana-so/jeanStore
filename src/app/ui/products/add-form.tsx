@@ -21,8 +21,10 @@ import {
   measurementBackCrotch,
   measurementThigh,
   measurementInseam,
-  sizeLabel, 
-  fitOptions, materialOptions, stretchOptions
+  sizeLabel,
+  fitOptions,
+  materialOptions,
+  stretchOptions,
 } from '@/app/lib/jeansDefinitions';
 
 export default function Form() {
@@ -167,28 +169,32 @@ export default function Form() {
           </div>
           {/* Size */}
           <div className="mb-4">
-          <label htmlFor="sizeLabel" className="block text-sm font-medium">
-          Size Label
-        </label>
-        <select
-          {...register('sizeLabel', {
-            required: 'Size label is required',
-          })}
-          id="sizeLabel"
-          name="sizeLabel"
-         className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-        >
-          <option value="" disabled>
-            Select a size label
-          </option>
-          
-          {sizeLabel.map((size) => (
-            <option key={size} value={size} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-              {size}
-            </option>
-          ))}
-        </select>
-      </div>
+            <label htmlFor="sizeLabel" className="block text-sm font-medium">
+              Size Label
+            </label>
+            <select
+              {...register('sizeLabel', {
+                required: 'Size label is required',
+              })}
+              id="sizeLabel"
+              name="sizeLabel"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+            >
+              <option value="" disabled>
+                Select a size label
+              </option>
+
+              {sizeLabel.map((size) => (
+                <option
+                  key={size}
+                  value={size}
+                  className="bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100"
+                >
+                  {size}
+                </option>
+              ))}
+            </select>
+          </div>
           {/* Price */}
           <div className="mb-4">
             <label htmlFor="price" className="mb-2 block text-sm font-medium">
@@ -298,76 +304,73 @@ export default function Form() {
             </div>
           </div>
           <div className="mb-4">
-        <label htmlFor="fit" className="block text-sm font-medium">
-          Fit
-        </label>
-        <select
-          {...register('fit', {
-            required: 'Fit is required',
-          })}
-          id="fit"
-          name="fit"
-          className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:placeholder:text-gray-400"
-        >
-          <option value="" disabled>
-            Select a fit
-          </option>
-          {fitOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-       
-      </div>
-      {/* material */}
-      <div className="mb-4">
-        <label htmlFor="material" className="block text-sm font-medium">
-          Material
-        </label>
-        <select
-          {...register('material', {
-            required: 'Material is required',
-          })}
-          id="material"
-          name="material"
-         className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:placeholder:text-gray-400"
-        >
-          <option value="" disabled>
-            Select a material
-          </option>
-          {materialOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-        
-      </div>
+            <label htmlFor="fit" className="block text-sm font-medium">
+              Fit
+            </label>
+            <select
+              {...register('fit', {
+                required: 'Fit is required',
+              })}
+              id="fit"
+              name="fit"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:placeholder:text-gray-400"
+            >
+              <option value="" disabled>
+                Select a fit
+              </option>
+              {fitOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* material */}
+          <div className="mb-4">
+            <label htmlFor="material" className="block text-sm font-medium">
+              Material
+            </label>
+            <select
+              {...register('material', {
+                required: 'Material is required',
+              })}
+              id="material"
+              name="material"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:placeholder:text-gray-400"
+            >
+              <option value="" disabled>
+                Select a material
+              </option>
+              {materialOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      <div className="mb-4">
-        <label htmlFor="stretch" className="block text-sm font-medium">
-          Stretch
-        </label>
-        <select
-          {...register('stretch', {
-            required: 'Stretch is required',
-          })}
-          id="stretch"
-          name="stretch"
-          className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:placeholder:text-gray-400"
-        >
-          <option value="" disabled>
-            Select a stretch type
-          </option>
-          {stretchOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-
-      </div>
+          <div className="mb-4">
+            <label htmlFor="stretch" className="block text-sm font-medium">
+              Stretch
+            </label>
+            <select
+              {...register('stretch', {
+                required: 'Stretch is required',
+              })}
+              id="stretch"
+              name="stretch"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:placeholder:text-gray-400"
+            >
+              <option value="" disabled>
+                Select a stretch type
+              </option>
+              {stretchOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
 
           {/* Measurement Length */}
           <div className="mb-4">

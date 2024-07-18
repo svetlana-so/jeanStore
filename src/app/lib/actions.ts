@@ -9,7 +9,6 @@ import { cookies } from 'next/headers';
 import { FormFields } from './definitions';
 import { select } from '@nextui-org/theme';
 
-
 const loginSchema = z.object({
   email: z.string().min(1, 'Email is required'),
   password: z.string().min(8, 'Password is required'),
@@ -80,11 +79,12 @@ export async function createImages(urls: string[], productId: string) {
 
 export async function fetchProductById(id: string) {
   try {
-    const product = await db.selectFrom('products')
+    const product = await db
+      .selectFrom('products')
       .selectAll()
       .where('id', '=', id)
       .executeTakeFirstOrThrow();
-console.log(product)
+    console.log(product);
     return product;
   } catch (error) {
     console.error('Database Error:', error);
@@ -92,9 +92,8 @@ console.log(product)
   }
 }
 
-export async function updateProduct(id: string,
-  formData: FormData,) {
-    /* const { ... } = formData
+export async function updateProduct(id: string, formData: FormData) {
+  /* const { ... } = formData
     try {
       await db
       .updateTable('products')
@@ -109,10 +108,7 @@ export async function updateProduct(id: string,
    
     revalidatePath('/dashboard/products');
     redirect('/dashboard/products'); */
-  }
-
-
-
+}
 
 export async function authenticate(data: LoginFormFields) {
   try {

@@ -1,5 +1,5 @@
 import { Generated } from 'kysely';
-import {z} from 'zod'
+import { z } from 'zod';
 
 export interface ProductTable {
   id: Generated<string>;
@@ -51,7 +51,7 @@ export type User = {
 export type Product = {
   id: string;
   brand: string;
-  sizeLabel: string; 
+  sizeLabel: string;
   waist: string;
   length: string;
   color: string;
@@ -69,7 +69,6 @@ export type Product = {
   in_stock?: boolean;
 };
 
-
 export type Image = {
   id: string;
   url: string;
@@ -78,7 +77,6 @@ export type Image = {
 export interface ProductWithImage extends Product {
   images: Image[];
 }
-
 
 export const schema = z.object({
   brand: z.string().min(1),
