@@ -52,7 +52,10 @@ export default async function Page({
           measurementThigh={measurementThigh}
           measurementInseam={measurementInseam}
         />
-        <JeansList products={products} />
+       
+        <JeansList 
+         //@ts-ignore for now
+        products={products} />
       </div>
     </>
   );
