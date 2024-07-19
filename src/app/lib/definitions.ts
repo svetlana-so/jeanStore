@@ -51,18 +51,18 @@ export type User = {
 export type Product = {
   id: string;
   brand: string;
-  sizeLabel: string;
-  waist: string;
-  length: string;
+  size_label: string;
+  size_waist: string;
+  size_length: string;
   color: string;
   fit: string;
   material: string;
   stretch: string;
-  hipMeasurement: number;
-  frontCrotchMeasurement: number;
-  backCrotchMeasurement: number;
-  thighMeasurement: number;
-  inseamMeasurement: number;
+  measurement_hip: number;
+  measurement_front_crotch: number;
+  measurement_back_crotch: number;
+  measurement_thigh: number;
+  measurement_inseam: number;
   price: number;
   category: string;
   date: string;
@@ -75,7 +75,7 @@ export type Image = {
 };
 
 export interface ProductWithImage extends Product {
-  images: Image[];
+  images: Image[];  
 }
 
 export const schema = z.object({

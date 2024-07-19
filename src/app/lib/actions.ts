@@ -77,21 +77,6 @@ export async function createImages(urls: string[], productId: string) {
   }
 }
 
-export async function fetchProductById(id: string) {
-  try {
-    const product = await db
-      .selectFrom('products')
-      .selectAll()
-      .where('id', '=', id)
-      .executeTakeFirstOrThrow();
-    console.log(product);
-    return product;
-  } catch (error) {
-    console.error('Database Error:', error);
-    return { message: 'Database Error: Failed to fetch product.' };
-  }
-}
-
 export async function updateProduct(id: string, formData: FormData) {
   /* const { ... } = formData
     try {
@@ -108,6 +93,23 @@ export async function updateProduct(id: string, formData: FormData) {
    
     revalidatePath('/dashboard/products');
     redirect('/dashboard/products'); */
+}
+
+export async function deleteProduct(id:string) {
+  try {
+    // Create an array of promises
+    const promises = [
+      db.deleteFrom('images').where('product_id', '=', id).execute(),
+      db.deleteFrom('products').where('id', '=', id).execute(),
+    ];
+
+    await Promise.all(promises);
+
+    console.log(`Product and associated pictures with ID ${id} have been deleted.`);
+  } catch (err) {
+    console.error('Error deleting product and/or pictures:', err);
+    throw new Error('Failed to delete product and/or its associated pictures.');
+  }
 }
 
 export async function authenticate(data: LoginFormFields) {

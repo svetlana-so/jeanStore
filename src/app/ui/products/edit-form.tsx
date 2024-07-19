@@ -18,21 +18,45 @@ import {
   stretchOptions,
 } from '@/app/lib/jeansDefinitions';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { deleteProduct } from '@/app/lib/actions';
 
 interface EditFormProps {
   product: Product;
 }
 
+
+
 export const EditForm: React.FC<EditFormProps> = ({ product }) => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({
+    defaultValues: product, 
+  });
 
+  const onSubmit = async (data: Product) => {
+    try {
+      // Add logic later
+      console.log(data);
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  };
+  async function handleProductDelete(id: string) {
+    try {
+      await deleteProduct(id)
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    } finally {
+      router.push('/dashboard/products');
+    }
+  }
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-2">
         {/* Brand */}
         <div className="mb-4">
@@ -56,9 +80,9 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
             Size Label
           </label>
           <select
-            defaultValue={product.sizeLabel}
+            defaultValue={product.size_label}
             id="sizeLabel"
-            {...register('sizeLabel')}
+            {...register('size_label')}
             className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
           >
             <option value="" disabled>
@@ -126,8 +150,8 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           </label>
           <select
             id="waist"
-            {...register('waist')}
-            defaultValue={product.waist}
+            {...register('size_waist')}
+            defaultValue={product.size_waist}
             className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:placeholder:text-gray-400"
           >
             <option value="" disabled>
@@ -242,8 +266,8 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           </label>
           <select
             id="length"
-            {...register('length')}
-            defaultValue={product.length}
+            {...register('size_label')}
+            defaultValue={product.size_length}
             className="dark:placeholder-text-gray-400 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
           >
             <option value="" disabled>
@@ -267,8 +291,8 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           </label>
           <select
             id="hipMeasurement"
-            {...register('hipMeasurement')}
-            defaultValue={product.hipMeasurement}
+            {...register('measurement_hip')}
+            defaultValue={product.measurement_hip}
             className="dark:placeholder-text-gray-400 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
           >
             <option value="" disabled>
@@ -292,8 +316,8 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           </label>
           <select
             id="frontCrotchMeasurement"
-            {...register('frontCrotchMeasurement')}
-            defaultValue={product.frontCrotchMeasurement}
+            {...register('measurement_front_crotch')}
+            defaultValue={product.measurement_front_crotch}
             className="dark:placeholder-text-gray-400 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
           >
             <option value="" disabled>
@@ -317,8 +341,8 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           </label>
           <select
             id="backCrotchMeasurement"
-            {...register('backCrotchMeasurement')}
-            defaultValue={product.backCrotchMeasurement}
+            {...register('measurement_back_crotch')}
+            defaultValue={product.measurement_back_crotch}
             className="dark:placeholder-text-gray-400 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
           >
             <option value="" disabled>
@@ -342,8 +366,8 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           </label>
           <select
             id="thighMeasurement"
-            {...register('thighMeasurement')}
-            defaultValue={product.thighMeasurement}
+            {...register('measurement_thigh')}
+            defaultValue={product.measurement_thigh}
             className="dark:placeholder-text-gray-400 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
           >
             <option value="" disabled>
@@ -367,8 +391,8 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           </label>
           <select
             id="inseamMeasurement"
-            {...register('inseamMeasurement')}
-            defaultValue={product.inseamMeasurement}
+            {...register('measurement_inseam')}
+            defaultValue={product.measurement_inseam}
             className="dark:placeholder-text-gray-400 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
           >
             <option value="" disabled>
@@ -386,9 +410,14 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           <div className="text-red-400">{errors.root.message}</div>
         )}
 
-        <div className="mt-2 flex justify-end">
+        <div className="mt-2 flex justify-end gap-2">
           <Button disabled={isSubmitting} type="submit">
             {isSubmitting ? 'Loading' : 'Submit'}
+          </Button>
+          <Button 
+          onClick={() => handleProductDelete(product.id)}
+          className='hover:bg-red-600' >
+            Delete product
           </Button>
         </div>
       </div>

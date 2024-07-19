@@ -13,11 +13,11 @@ type CardProps = {
 
 export const Card: React.FC<CardProps> = ({ product, onClick }) => {
   return (
-    <div className="flex flex-col gap-4" onClick={onClick}>
+    <div className="flex flex-col gap-4">
       <h2 className="font-bold dark:text-gray-200">{product.brand}</h2>
       <Carousel>
         {product.images.map((image) => (
-          <div key={image.id} className="flex flex-col gap-2">
+          <div onClick={onClick} key={image.id} className="flex flex-col gap-2">
             <img
               src={image.url}
               alt={`Image of ${product.brand}`}

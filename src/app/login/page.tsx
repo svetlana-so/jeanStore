@@ -16,10 +16,4 @@ export default function LoginPage() {
   );
 }
 
-/* LoginPage.getLayout = function PageLayout(page: ReactElement){
-  return (
-    <>
-    {page}
-    </>
-  )
-} */
+

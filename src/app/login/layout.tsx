@@ -6,7 +6,6 @@ export default function LoginLayout({
   return (
     <section>
       {children}
-      login
     </section>
   );
 }
