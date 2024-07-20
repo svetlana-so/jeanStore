@@ -7,7 +7,7 @@ import { TbMoodEmpty } from "react-icons/tb";
 
 export default async function Home() {
   const products = await fetchProducts();
-  const basePath = '/';
+  const basePath = '/products';
 
  
 

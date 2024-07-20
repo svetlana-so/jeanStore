@@ -41,23 +41,23 @@ export async function fetchProducts(): Promise<ProductWithImage[]> {
 
     return data.map((row: any) => ({
       id: row.id,
-          brand: row.brand,
-          size_label: row.size_label,
-          size_waist: row.size_waist,
-          size_length: row.size_length,
-          color: row.color,
-          fit: row.fit,
-          material: row.material,
-          stretch: row.stretch,
-          measurement_hip: row.measurement_hip,
-          measurement_front_crotch: row.measurement_front_crotch,
-          measurement_back_crotch: row.measurement_back_crotch,
-          measurement_thigh: row.measurement_thigh,
-          measurement_inseam: row.measurement_inseam,
-          price: row.price,
-          category: row.category,
-          date: row.date,
-          in_stock: row.in_stock,
+      brand: row.brand,
+      size_label: row.size_label,
+      size_waist: row.size_waist,
+      size_length: row.size_length,
+      color: row.color,
+      fit: row.fit,
+      material: row.material,
+      stretch: row.stretch,
+      measurement_hip: row.measurement_hip,
+      measurement_front_crotch: row.measurement_front_crotch,
+      measurement_back_crotch: row.measurement_back_crotch,
+      measurement_thigh: row.measurement_thigh,
+      measurement_inseam: row.measurement_inseam,
+      price: row.price,
+      category: row.category,
+      date: row.date,
+      in_stock: row.in_stock,
       images: row.images || [],
     }));
   } catch (err) {
@@ -83,7 +83,7 @@ export async function fetchProductsByCategory(category: string) {
       .where('products.category', '=', category)
       .groupBy('products.id')
       .execute();
-  
+
     return data;
   } catch (error) {
     console.error('Database Error:', error);
@@ -94,11 +94,36 @@ export async function fetchProductsByCategory(category: string) {
 export async function fetchProductById(id: string) {
   try {
     const product = await db
-      .selectFrom('products')
-      .selectAll()
-      .where('id', '=', id)
-      .executeTakeFirstOrThrow();
-    
+    .selectFrom('products')
+    .innerJoin('images', 'images.product_id', 'products.id')
+    //@ts-ignore
+    .select([
+      'products.id',
+      'products.brand',
+      'products.size_label',
+      'products.size_waist',
+      'products.size_length',
+      'products.color',
+      'products.fit',
+      'products.material',
+      'products.stretch',
+      'products.measurement_hip',
+      'products.measurement_front_crotch',
+      'products.measurement_back_crotch',
+      'products.measurement_thigh',
+      'products.measurement_inseam',
+      'products.price',
+      'products.category',
+      'products.date',
+      'products.in_stock',
+      sql`json_agg(json_build_object('id', images.id, 'url', images.image_url)) as images`
+    ])
+    .where('products.id', '=', id)
+    .groupBy(
+      'products.id',
+    )
+    .executeTakeFirstOrThrow();
+    console.log(product);
     return product;
   } catch (error) {
     console.error('Database Error:', error);
