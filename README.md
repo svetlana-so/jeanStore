@@ -2,7 +2,7 @@
 
 ## Description
 
-Jeans Store is an e-commerce application designed to help users browse and purchase jeans. The application displays a list of available jeans, allows users to view detailed product information, and facilitates easy navigation between different product pages.
+Jeans Store is an e-commerce application designed to help users browse and purchase secondhand jeans. The application displays a list of available jeans, allows users to view detailed product information, and facilitates easy navigation between different product pages.
 
 ## Features
 

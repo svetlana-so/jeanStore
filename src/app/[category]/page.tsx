@@ -40,27 +40,30 @@ export default async function Page({
         <NavBar />
       </div>
       <div className="mx-4">
-        <Filter
-        categories={categories}
-          sizes={sizes}
-          colors={colors}
-          brands={brands}
-          sizeWaist={sizeWaist}
-          sizeLength={sizeLength}
-          materials={materials}
-          stretches={stretches}
-          measurementHip={measurementHip}
-          measurementFrontCrotch={measurementFrontCrotch}
-          measurementBackCrotch={measurementBackCrotch}
-          measurementThigh={measurementThigh}
-          measurementInseam={measurementInseam}
-        />
-
-        <JeansList
-          //@ts-ignore for now
-          products={products}
-          basePath={basePath}
-        />
+        {products.length === 0? ( <h1 className='text-center m-4 font-semibold'>No products for this category</h1>) : (
+          <> <Filter
+          categories={categories}
+            sizes={sizes}
+            colors={colors}
+            brands={brands}
+            sizeWaist={sizeWaist}
+            sizeLength={sizeLength}
+            materials={materials}
+            stretches={stretches}
+            measurementHip={measurementHip}
+            measurementFrontCrotch={measurementFrontCrotch}
+            measurementBackCrotch={measurementBackCrotch}
+            measurementThigh={measurementThigh}
+            measurementInseam={measurementInseam}
+          />
+  
+          <JeansList
+            //@ts-ignore for now
+            products={products}
+            basePath={basePath}
+          /></>
+        )}
+       
       </div>
     </>
   );

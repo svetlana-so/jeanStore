@@ -114,10 +114,10 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           </div>
 
           <div className="mt-4 flex gap-4">
-            <button className="rounded bg-black p-4 text-white">
+            <button className="rounded bg-black p-4 text-white hover:bg-orange-400">
               ADD TO BAG
             </button>
-            <button className="rounded border border-gray-300 p-4">
+            <button className="rounded border border-gray-300 p-4 hover:bg-red-300">
               FAVORITE
             </button>
           </div>
