@@ -66,7 +66,6 @@ export async function fetchProducts(): Promise<ProductWithImage[]> {
   }
 }
 
-const ITEMS_PER_PAGE = 6;
 
 export async function fetchProductsByCategory(category: string) {
   try {
@@ -123,7 +122,6 @@ export async function fetchProductById(id: string) {
       'products.id',
     )
     .executeTakeFirstOrThrow();
-    console.log(product);
     return product;
   } catch (error) {
     console.error('Database Error:', error);
