@@ -55,12 +55,6 @@ export const Filter = ({
           </DrawerTrigger>
 
           <DrawerContent className="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-200">
-            <DrawerHeader>
-              <DrawerTitle className="dark:text-gray-300">
-                Women Hardcoded
-              </DrawerTitle>
-            </DrawerHeader>
-
             <ScrollArea className="m-2 overflow-y-auto text-gray-700 dark:text-gray-300">
               <div>
                 <SelectField brands={brands} />
