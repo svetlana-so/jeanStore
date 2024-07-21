@@ -16,6 +16,13 @@ Jeans Store is an e-commerce application designed to help users browse and purch
 - Frontend: React, Next.js, Tailwind CSS
 - Backend: Node.js, Kysely, Versel, Edgestore
 
+
+## Test the project
+
+Visit https://jean-store-1-ejlheiap7-svetlanas-projects-07a9a07b.vercel.app/
+
+
+
 // TODO
 
 - add pagination
