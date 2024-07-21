@@ -163,6 +163,7 @@ export async function fetchAllAttributes() {
       .selectFrom('products')
       .select([
         'size_label',
+        'category',
         'color',
         'brand',
         'size_waist',
@@ -179,6 +180,7 @@ export async function fetchAllAttributes() {
 
     const uniqSizes = getUniqueValues(data, 'size_label');
     const uniqColors = getUniqueValues(data, 'color');
+    const categories = getUniqueValues(data, 'category');
     const uniqBrands = getUniqueValues(data, 'brand');
     const sizeWaist = getUniqueValues(data, 'size_waist');
     const sizeLength = getUniqueValues(data, 'size_length');
@@ -209,6 +211,7 @@ export async function fetchAllAttributes() {
       measurementBackCrotch,
       measurementThigh,
       measurementInseam,
+      categories
     };
   } catch (error) {
     console.error('Database Error:', error);

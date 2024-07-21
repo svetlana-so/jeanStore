@@ -16,6 +16,7 @@ import { SelectField } from './componentsForFilterBar/select';
 import { ToggleGroupFiled } from './componentsForFilterBar/toggle-group-field';
 
 type FilterProps = {
+  categories: string[];
   sizes: string[];
   colors: string[];
   brands: string[];
@@ -31,6 +32,7 @@ type FilterProps = {
 };
 
 export const Filter = ({
+  categories,
   sizes,
   colors,
   brands,
@@ -62,6 +64,10 @@ export const Filter = ({
             <ScrollArea className="m-2 overflow-y-auto text-gray-700 dark:text-gray-300">
               <div>
                 <SelectField brands={brands} />
+              </div>
+              <div className="my-2 flex flex-col gap-4">
+                <p>Category: </p>
+                <ToggleGroupFiled items={categories} />
               </div>
               <div className="my-2 flex flex-col gap-4">
                 <p>Size: </p>

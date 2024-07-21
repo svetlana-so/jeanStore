@@ -18,6 +18,7 @@ export default async function Page({
   const products = await fetchProductsByCategory(category);
 
   const {
+    categories,
     sizes,
     colors,
     brands,
@@ -40,6 +41,7 @@ export default async function Page({
       </div>
       <div className="mx-4">
         <Filter
+        categories={categories}
           sizes={sizes}
           colors={colors}
           brands={brands}
