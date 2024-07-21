@@ -90,7 +90,9 @@ export default function LoginForm() {
           {isSubmitting ? 'Loading' : 'Login'}{' '}
           <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
-        <div
+        
+      </div>
+      <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
           aria-atomic="true"
@@ -99,7 +101,6 @@ export default function LoginForm() {
             <div className="text-red-400">{errors.root.message}</div>
           )}
         </div>
-      </div>
     </form>
   );
 }

@@ -7,7 +7,7 @@ export default function HomeBtn() {
 
 const router = useRouter()
   return (
-    <button onClick={() => router.push('/')} className="font-bold text-black
+    <button onClick={() => router.push('/')} className="font-bold text-black dark:text-zinc-300
     m-4">
     &larr; HOME
   </button>
