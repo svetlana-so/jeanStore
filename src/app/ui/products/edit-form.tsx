@@ -25,8 +25,6 @@ interface EditFormProps {
   product: Product;
 }
 
-
-
 export const EditForm: React.FC<EditFormProps> = ({ product }) => {
   const router = useRouter();
   const {
@@ -35,7 +33,7 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
     setError,
     formState: { errors, isSubmitting },
   } = useForm({
-    defaultValues: product, 
+    defaultValues: product,
   });
 
   const onSubmit = async (data: Product) => {
@@ -48,7 +46,7 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
   };
   async function handleProductDelete(id: string) {
     try {
-      await deleteProduct(id)
+      await deleteProduct(id);
     } catch (error) {
       console.error('Error deleting product:', error);
     } finally {
@@ -414,9 +412,10 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           <Button disabled={isSubmitting} type="submit">
             {isSubmitting ? 'Loading' : 'Submit'}
           </Button>
-          <Button 
-          onClick={() => handleProductDelete(product.id)}
-          className='hover:bg-red-600' >
+          <Button
+            onClick={() => handleProductDelete(product.id)}
+            className="hover:bg-red-600"
+          >
             Delete product
           </Button>
         </div>

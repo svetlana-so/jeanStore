@@ -32,6 +32,7 @@ export default async function Page({
     measurementInseam,
   } = await fetchAllAttributes();
 
+  const basePath = '/products';
   return (
     <>
       <div className="w-full flex-none p-4">
@@ -52,10 +53,12 @@ export default async function Page({
           measurementThigh={measurementThigh}
           measurementInseam={measurementInseam}
         />
-       
-        <JeansList 
-         //@ts-ignore for now
-        products={products} />
+
+        <JeansList
+          //@ts-ignore for now
+          products={products}
+          basePath={basePath}
+        />
       </div>
     </>
   );

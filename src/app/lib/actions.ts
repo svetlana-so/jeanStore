@@ -95,7 +95,7 @@ export async function updateProduct(id: string, formData: FormData) {
     redirect('/dashboard/products'); */
 }
 
-export async function deleteProduct(id:string) {
+export async function deleteProduct(id: string) {
   try {
     // Create an array of promises
     const promises = [
@@ -105,7 +105,9 @@ export async function deleteProduct(id:string) {
 
     await Promise.all(promises);
 
-    console.log(`Product and associated pictures with ID ${id} have been deleted.`);
+    console.log(
+      `Product and associated pictures with ID ${id} have been deleted.`,
+    );
   } catch (err) {
     console.error('Error deleting product and/or pictures:', err);
     throw new Error('Failed to delete product and/or its associated pictures.');

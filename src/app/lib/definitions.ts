@@ -75,7 +75,7 @@ export type Image = {
 };
 
 export interface ProductWithImage extends Product {
-  images: Image[];  
+  images: Image[];
 }
 
 export const schema = z.object({

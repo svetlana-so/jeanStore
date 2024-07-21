@@ -66,7 +66,6 @@ export async function fetchProducts(): Promise<ProductWithImage[]> {
   }
 }
 
-
 export async function fetchProductsByCategory(category: string) {
   try {
     const data = await db
@@ -93,35 +92,33 @@ export async function fetchProductsByCategory(category: string) {
 export async function fetchProductById(id: string) {
   try {
     const product = await db
-    .selectFrom('products')
-    .innerJoin('images', 'images.product_id', 'products.id')
-    //@ts-ignore
-    .select([
-      'products.id',
-      'products.brand',
-      'products.size_label',
-      'products.size_waist',
-      'products.size_length',
-      'products.color',
-      'products.fit',
-      'products.material',
-      'products.stretch',
-      'products.measurement_hip',
-      'products.measurement_front_crotch',
-      'products.measurement_back_crotch',
-      'products.measurement_thigh',
-      'products.measurement_inseam',
-      'products.price',
-      'products.category',
-      'products.date',
-      'products.in_stock',
-      sql`json_agg(json_build_object('id', images.id, 'url', images.image_url)) as images`
-    ])
-    .where('products.id', '=', id)
-    .groupBy(
-      'products.id',
-    )
-    .executeTakeFirstOrThrow();
+      .selectFrom('products')
+      .innerJoin('images', 'images.product_id', 'products.id')
+      //@ts-ignore
+      .select([
+        'products.id',
+        'products.brand',
+        'products.size_label',
+        'products.size_waist',
+        'products.size_length',
+        'products.color',
+        'products.fit',
+        'products.material',
+        'products.stretch',
+        'products.measurement_hip',
+        'products.measurement_front_crotch',
+        'products.measurement_back_crotch',
+        'products.measurement_thigh',
+        'products.measurement_inseam',
+        'products.price',
+        'products.category',
+        'products.date',
+        'products.in_stock',
+        sql`json_agg(json_build_object('id', images.id, 'url', images.image_url)) as images`,
+      ])
+      .where('products.id', '=', id)
+      .groupBy('products.id')
+      .executeTakeFirstOrThrow();
     return product;
   } catch (error) {
     console.error('Database Error:', error);
