@@ -39,27 +39,11 @@ export async function fetchProducts(): Promise<ProductWithImage[]> {
       .groupBy('products.id')
       .execute();
 
-    return data.map((row: any) => ({
-      id: row.id,
-      brand: row.brand,
-      size_label: row.size_label,
-      size_waist: row.size_waist,
-      size_length: row.size_length,
-      color: row.color,
-      fit: row.fit,
-      material: row.material,
-      stretch: row.stretch,
-      measurement_hip: row.measurement_hip,
-      measurement_front_crotch: row.measurement_front_crotch,
-      measurement_back_crotch: row.measurement_back_crotch,
-      measurement_thigh: row.measurement_thigh,
-      measurement_inseam: row.measurement_inseam,
-      price: row.price,
-      category: row.category,
-      date: row.date,
-      in_stock: row.in_stock,
-      images: row.images || [],
+    const products: ProductWithImage[] = data.map((item) => ({
+      ...item,
+      images: item.images as unknown as Image[],
     }));
+    return products;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all products.');
