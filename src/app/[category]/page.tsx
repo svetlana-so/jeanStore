@@ -58,7 +58,6 @@ export default async function Page({
           />
   
           <JeansList
-            //@ts-ignore for now
             products={products}
             basePath={basePath}
           /></>

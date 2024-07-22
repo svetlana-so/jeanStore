@@ -1,7 +1,7 @@
 'use server';
 import { sql } from 'kysely';
 /* import { sql } from '@vercel/postgres'; */
-import { ProductWithImage } from './definitions';
+import { ProductWithImage, Image } from './definitions';
 import { createKysely } from '@vercel/postgres-kysely';
 import { Database } from './definitions';
 import { getUniqueValues } from './utils';
@@ -66,7 +66,9 @@ export async function fetchProducts(): Promise<ProductWithImage[]> {
   }
 }
 
-export async function fetchProductsByCategory(category: string) {
+export async function fetchProductsByCategory(
+  category: string,
+): Promise<ProductWithImage[]> {
   try {
     const data = await db
       .selectFrom('products')
@@ -76,22 +78,46 @@ export async function fetchProductsByCategory(category: string) {
         'products.id',
         'products.brand',
         'products.price',
+        'products.size_label',
+        'products.size_waist',
+        'products.size_length',
+        'products.color',
+        'products.fit',
+        'products.material',
+        'products.stretch',
+        'products.measurement_hip',
+        'products.measurement_front_crotch',
+        'products.measurement_back_crotch',
+        'products.measurement_thigh',
+        'products.measurement_inseam',
+        'products.category',
+        'products.date',
+        'products.in_stock',
         sql`json_agg(json_build_object('id', images.id, 'url', images.image_url)) as images`,
       ])
       .where('products.category', '=', category)
       .groupBy('products.id')
       .execute();
 
-    return data;
+    //The json_agg function creates a JSON array of images
+    //for each product, which is correct,
+    // but TypeScript is not able to infer that images is a part of //
+    // each product in the resulting data set.
+    // Map the result to the ProductWithImage type
+    const products: ProductWithImage[] = data.map((item) => ({
+      ...item,
+      images: item.images as unknown as Image[], // Ensure TypeScript recognizes images as Image[]
+    }));
+    return products;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch products by category.');
   }
 }
 
-export async function fetchProductById(id: string) {
+export async function fetchProductById(id: string): Promise<ProductWithImage> {
   try {
-    const product = await db
+    const data = await db
       .selectFrom('products')
       .innerJoin('images', 'images.product_id', 'products.id')
       //@ts-ignore
@@ -119,10 +145,15 @@ export async function fetchProductById(id: string) {
       .where('products.id', '=', id)
       .groupBy('products.id')
       .executeTakeFirstOrThrow();
+    const product: ProductWithImage = {
+      ...data,
+      images: data.images as unknown as Image[], // Ensure TypeScript recognizes images as Image[]
+    };
+
     return product;
   } catch (error) {
     console.error('Database Error:', error);
-    return { message: 'Database Error: Failed to fetch product.' };
+    throw new Error('Failed to fetch products by category.');
   }
 }
 
@@ -211,7 +242,7 @@ export async function fetchAllAttributes() {
       measurementBackCrotch,
       measurementThigh,
       measurementInseam,
-      categories
+      categories,
     };
   } catch (error) {
     console.error('Database Error:', error);

@@ -1,6 +1,6 @@
 // src/components/ProductDetail.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect } from 'vitest'
+import { it, expect } from 'vitest'
 import ProductDetail from './productDetails';
 import { productMock } from '../../../lib/fixtures';
 import { vi } from 'vitest';

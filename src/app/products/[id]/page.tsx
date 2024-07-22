@@ -14,7 +14,6 @@ export default async function Page({ params }: { params: { id: string } }) {
       </div>
 
       <ProductDetail
-        //@ts-ignore
         product={product}
       />
     </>
