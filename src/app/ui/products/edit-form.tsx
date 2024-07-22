@@ -19,14 +19,16 @@ import {
 } from '@/app/lib/jeansDefinitions';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { deleteProduct } from '@/app/lib/actions';
+import { deleteProduct, updateProduct } from '@/app/lib/actions';
 
 interface EditFormProps {
   product: Product;
+  id: string
 }
 
-export const EditForm: React.FC<EditFormProps> = ({ product }) => {
+export const EditForm: React.FC<EditFormProps> = ({ product,  id}) => {
   const router = useRouter();
+  
   const {
     register,
     handleSubmit,
@@ -38,7 +40,8 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
 
   const onSubmit = async (data: Product) => {
     try {
-      // Add logic later
+      
+    console.log(data);
       console.log(data);
     } catch (error) {
       console.error('Error updating product:', error);
@@ -74,7 +77,7 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
 
         {/* Size Label */}
         <div className="mb-4">
-          <label htmlFor="sizeLabel" className="block text-sm font-medium">
+          <label htmlFor="size_label" className="block text-sm font-medium">
             Size Label
           </label>
           <select
@@ -259,6 +262,7 @@ export const EditForm: React.FC<EditFormProps> = ({ product }) => {
           <label
             htmlFor="length"
             className="block text-sm font-medium dark:text-gray-200"
+            defaultValue={product.size_length}
           >
             Length (in)
           </label>

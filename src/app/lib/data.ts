@@ -1,6 +1,5 @@
 'use server';
 import { sql } from 'kysely';
-/* import { sql } from '@vercel/postgres'; */
 import { ProductWithImage, Image } from './definitions';
 import { createKysely } from '@vercel/postgres-kysely';
 import { Database } from './definitions';

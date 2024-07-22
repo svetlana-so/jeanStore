@@ -55,7 +55,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         <div className="flex w-full flex-col gap-4 md:w-1/3">
           <h1 className="text-3xl font-bold">{product.brand}</h1>
           <div>
-            <span className="text-xl text-gray-500">{product.price}</span>
+            <span className="text-xl text-gray-500">{product.price} SEK</span>
           </div>
           <div>
             <h1 className="text-lg font-bold">Size</h1>

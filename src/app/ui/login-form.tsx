@@ -98,7 +98,7 @@ export default function LoginForm() {
           aria-atomic="true"
         >
           {errors.root && (
-            <div className="text-red-400">{errors.root.message}</div>
+            <div className="text-red-400 text-center">{errors.root.message}</div>
           )}
         </div>
     </form>

@@ -2,7 +2,10 @@
 
 ## Description
 
-Jeans Store is an e-commerce application designed to help users browse and purchase secondhand jeans. The application displays a list of available jeans, allows users to view detailed product information, and facilitates easy navigation between different product pages.
+Jeans Store is an e-commerce application designed to help users browse and purchase secondhand jeans. The application features a user-friendly interface for viewing a list of available jeans, accessing detailed product information, and navigating between various product categories and pages.
+
+Admin Panel: The admin panel enhances product management by allowing administrators to add new jeans, delete outdated items, and update product details. This ensures the product catalog remains current and accurate, providing a seamless experience for users and maintaining high-quality inventory management.
+
 
 ## Features
 
@@ -17,17 +20,18 @@ Jeans Store is an e-commerce application designed to help users browse and purch
 - Backend: Node.js, Kysely, Versel, Edgestore
 
 
-## Test the project
+## Check the project in action
 
 Visit https://jean-store-1-ejlheiap7-svetlanas-projects-07a9a07b.vercel.app/
-
-
+To enter the dashboard go to admin panel, enter: 
+ ```bash
+User: sobolevasvetlanaalex@gmail.com
+Password: 123456
+```
 
 // TODO
 
-- add pagination
-- add login
+- update product: in progress 
 - dashboard style
-- add col in_stock
-- all products queries ?
-- drawer overflow-auto?
+- all products queries ? on the pages
+- add pagination
