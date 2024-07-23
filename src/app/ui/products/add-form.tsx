@@ -3,14 +3,14 @@
 import {
   MultiImageDropzone,
   type FileState,
-} from '@/app/ui/dashboard/MultiImageDropzone';
+} from '../dashboard/MultiImageDropzone';
 import { useRouter } from 'next/navigation';
-import { useEdgeStore } from '@/app/lib/edgestore';
+import { useEdgeStore } from '../../lib/edgestore';
 import { useState } from 'react';
-import { createProduct, createImages } from '@/app/lib/actions';
+import { createProduct, createImages } from '../../lib/actions';
 import { Button } from '../button';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { FormFields } from '@/app/lib/definitions';
+import { FormFields } from '../../lib/definitions';
 import {
   categories,
   waist,
@@ -25,7 +25,7 @@ import {
   fitOptions,
   materialOptions,
   stretchOptions,
-} from '@/app/lib/jeansDefinitions';
+} from '../../lib/jeansDefinitions';
 
 export default function Form() {
   const router = useRouter();

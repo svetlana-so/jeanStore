@@ -3,7 +3,7 @@ import { sql } from 'kysely';
 import { createKysely } from '@vercel/postgres-kysely';
 import { z } from 'zod';
 import { Database, Product } from './definitions';
-import { signIn, encrypt } from '@/../../auth';
+import { signIn, encrypt } from '../../../auth';
 import { cookies } from 'next/headers';
 import { FormFields } from './definitions';
 

@@ -1,8 +1,8 @@
 // src/components/ProductDetail.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
 import { it, expect } from 'vitest'
-import ProductDetail from './productDetails';
-import { productMock } from '../../../lib/fixtures';
+import ProductDetail from '../app/ui/products/productDetails';
+import { productMock } from '../lib/fixtures';
 import { vi } from 'vitest';
 
 vi.mock("next/navigation", () => ({
@@ -31,7 +31,7 @@ it('renders product details correctly', () => {
     render(<ProductDetail product={productMock} />);
     
     expect(screen.getByText('Test Brand')).toBeInTheDocument();
-    expect(screen.getByText('100')).toBeInTheDocument();
+    expect(screen.getByText('100 SEK')).toBeInTheDocument();
     expect(screen.getByText('Size')).toBeInTheDocument();
     expect(screen.getByText('Color')).toBeInTheDocument();
   }); 

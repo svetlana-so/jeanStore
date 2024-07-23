@@ -1,9 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { describe, it, expect, vi } from 'vitest';
-import { Card } from './card'; 
+import { Card } from '../app/ui/products/card'; 
 
-import { productMock } from '../../../lib/fixtures';
+import { productMock } from '../lib/fixtures';
 
 describe('Card Component', () => {
   it('renders product brand and price correctly', () => {

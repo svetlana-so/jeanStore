@@ -31,7 +31,7 @@ Password: 123456
 
 // TODO
 
-- update product: in progress 
+- mock db for testing purpose
 - dashboard style
 - all products queries ? on the pages
 - add pagination
