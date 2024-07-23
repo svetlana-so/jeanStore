@@ -25,7 +25,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   };
 
   return (
-    <div className="bg-white p-8">
+    <div className="bg-white dark:bg-gray-800 p-8">
       <button onClick={() => router.push('/')} className="font-bold text-black">
         &larr; BACK
       </button>
