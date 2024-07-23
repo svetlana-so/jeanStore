@@ -2,11 +2,11 @@
 import { sql } from 'kysely';
 import { createKysely } from '@vercel/postgres-kysely';
 import { z } from 'zod';
-import { Database } from './definitions';
+import { Database, Product } from './definitions';
 import { signIn, encrypt } from '@/../../auth';
 import { cookies } from 'next/headers';
 import { FormFields } from './definitions';
-import { ProductWithImage, Image } from './definitions';
+
 
 const loginSchema = z.object({
   email: z.string().min(1, 'Email is required'),
@@ -76,51 +76,31 @@ export async function createImages(urls: string[], productId: string) {
   }
 }
 
-export async function updateProduct(id: string, updatedProduct: Partial<ProductWithImage>): Promise<ProductWithImage | null> {
+export async function updateProduct(id: string, updatedProduct: Partial<Product>): Promise<void> {
   try {
-    
     await db
       .updateTable('products')
-      .set(updatedProduct)
+      .set({
+        brand: updatedProduct.brand,
+        size_label: updatedProduct.size_label,
+        size_waist: updatedProduct.size_waist,
+        size_length: updatedProduct.size_length,
+        color: updatedProduct.color,
+        fit: updatedProduct.fit,
+        material: updatedProduct.material,
+        stretch: updatedProduct.stretch,
+        measurement_hip: updatedProduct.measurement_hip,
+        measurement_front_crotch: updatedProduct.measurement_front_crotch,
+        measurement_back_crotch: updatedProduct.measurement_back_crotch,
+        measurement_thigh: updatedProduct.measurement_thigh,
+        measurement_inseam: updatedProduct.measurement_inseam,
+        price: updatedProduct.price,
+        category: updatedProduct.category,
+        date: updatedProduct.date,
+        in_stock: updatedProduct.in_stock,
+      })
       .where('id', '=', id)
       .execute();
-
-    
-    const data = await db
-      .selectFrom('products')
-      .innerJoin('images', 'images.product_id', 'products.id')
-      //@ts-ignore
-      .select([
-        'products.id',
-        'products.brand',
-        'products.size_label',
-        'products.size_waist',
-        'products.size_length',
-        'products.color',
-        'products.fit',
-        'products.material',
-        'products.stretch',
-        'products.measurement_hip',
-        'products.measurement_front_crotch',
-        'products.measurement_back_crotch',
-        'products.measurement_thigh',
-        'products.measurement_inseam',
-        'products.price',
-        'products.category',
-        'products.date',
-        'products.in_stock',
-        sql`json_agg(json_build_object('id', images.id, 'url', images.image_url)) as images`,
-      ])
-      .where('products.id', '=', id)
-      .groupBy('products.id')
-      .executeTakeFirstOrThrow();
-
-    const product: ProductWithImage = {
-      ...data,
-      images: data.images as unknown as Image[],
-    };
-
-    return product;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to update product.');

@@ -40,9 +40,9 @@ export const EditForm: React.FC<EditFormProps> = ({ product,  id}) => {
 
   const onSubmit = async (data: Product) => {
     try {
-      
-    console.log(data);
       console.log(data);
+      await updateProduct(id, data)
+      router.push('/dashboard/products')
     } catch (error) {
       console.error('Error updating product:', error);
     }
@@ -77,7 +77,7 @@ export const EditForm: React.FC<EditFormProps> = ({ product,  id}) => {
 
         {/* Size Label */}
         <div className="mb-4">
-          <label htmlFor="size_label" className="block text-sm font-medium">
+          <label htmlFor="sizeLabel" className="block text-sm font-medium">
             Size Label
           </label>
           <select
@@ -268,7 +268,7 @@ export const EditForm: React.FC<EditFormProps> = ({ product,  id}) => {
           </label>
           <select
             id="length"
-            {...register('size_label')}
+            {...register('size_length')}
             defaultValue={product.size_length}
             className="dark:placeholder-text-gray-400 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
           >
