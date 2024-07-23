@@ -2,6 +2,7 @@
 import {
   FolderIcon,
   HomeIcon,
+  PlusIcon,
   DocumentDuplicateIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -9,7 +10,7 @@ import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
 const links = [
-  { name: 'Home', href: '/dashboard', icon: HomeIcon },
+  { name: 'Add products', href: '/dashboard', icon: PlusIcon },
 
   { name: 'Products', href: '/dashboard/products', icon: FolderIcon },
 ];
