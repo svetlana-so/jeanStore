@@ -75,8 +75,8 @@ export default function NavBar() {
             <Link
               color="foreground"
               href={link.href}
-              className={clsx('dark:text-gray-200 hover:text-orange-300', {
-                'text-orange-400': pathname === link.href,
+              className={clsx('dark:text-gray-200 dark:hover:text-orange-400 hover:text-orange-300', {
+                'text-orange-400 dark:text-orange-400': pathname === link.href,
               })}
             >
               {link.name}

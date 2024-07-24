@@ -6,7 +6,7 @@ import { Image } from '@/app/lib/definitions';
 
 import { ProductWithImage } from '@/app/lib/definitions';
 import { useRouter } from 'next/navigation';
-import { test } from '@playwright/test';
+import BackBtn from '../backBtn';
 
 type ProductDetailProps = {
   product: ProductWithImage;
@@ -24,12 +24,12 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  const pathName = '/'
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-8">
-      <button onClick={() => router.push('/')} className="font-bold text-black">
-        &larr; BACK
-      </button>
+    <div className="p-8">
+      <BackBtn path={pathName}/>
+    
       <div className="mt-4 flex flex-col gap-8 md:flex-row">
         <div className="flex flex-col">
           <div className="flex flex-col-reverse items-center md:flex-row">
