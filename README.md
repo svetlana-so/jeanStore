@@ -45,3 +45,8 @@ npm run test:unit
 npm run test:e2e
 
 ```
+
+
+## To set up DB in dev mode:
+
+Follow these steps: https://nextjs.org/learn/dashboard-app/setting-up-your-database
