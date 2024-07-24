@@ -6,6 +6,7 @@ import { Image } from '@/app/lib/definitions';
 
 import { ProductWithImage } from '@/app/lib/definitions';
 import { useRouter } from 'next/navigation';
+import { test } from '@playwright/test';
 
 type ProductDetailProps = {
   product: ProductWithImage;
@@ -53,20 +54,21 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           </div>
         </div>
         <div className="flex w-full flex-col gap-4 md:w-1/3">
-          <h1 className="text-3xl font-bold">{product.brand}</h1>
+          <h1 data-testid="brandName" className="text-3xl font-bold">{product.brand}</h1>
           <div>
-            <span className="text-xl text-gray-500">{product.price} SEK</span>
+            <span data-testid="price" className="text-xl text-gray-500">{product.price} SEK</span>
           </div>
           <div>
             <h1 className="text-lg font-bold">Size</h1>
-            <span>{product.size_label}</span>
+            <span data-testid="size">{product.size_label}</span>
           </div>
           <div>
             <h1 className="text-lg font-bold">Color</h1>
-            <span>{product.color}</span>
+            <span data-testid="color" >{product.color}</span>
           </div>
           <div className="border-b border-t border-gray-300 py-2">
             <button
+            data-testid="descriptionBtn" 
               onClick={toggleDropdown}
               className="flex w-full items-center justify-between text-left font-bold dark:text-gray-200"
             >
@@ -74,7 +76,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               <span>{isDropdownOpen ? '▲' : '▼'}</span>
             </button>
             {isDropdownOpen && (
-              <div className="mt-2 flex flex-col gap-4 p-2 dark:text-gray-200">
+              <div data-testid="productDescription" className="mt-2 flex flex-col gap-4 p-2 dark:text-gray-200">
                 <p>
                   <strong>Size Waist:</strong> {product.size_waist}
                 </p>

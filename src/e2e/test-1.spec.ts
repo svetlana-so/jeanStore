@@ -1,33 +1,36 @@
 import { test, expect } from '@playwright/test';
+import { createFakeProduct } from './utils/fixtures';
 
 
 test.describe('Product Detail Page', () => {
+  const fakeProduct = createFakeProduct();
+
   test('should navigate to the home page when clicking the back button', async ({ page }) => {
     // Navigate to the home page
-    await page.goto('http://localhost:3000/'); 
+    await page.goto('./'); 
     await page.locator('div').filter({ hasText: /^SEK 455\.00$/ }).first().click();
     await page.getByRole('button', { name: '← BACK' }).click();
 
     // Ensure the page navigates back to the home page
-    await expect(page).toHaveURL('http://localhost:3000/');
-  });
- /*  test.skip('should display product details correctly', async ({ page }) => {
-    // Navigate to the product detail page
-    await page.goto('/product/1'); // Adjust the URL as necessary
-
-    // Check the product brand
-    await expect(page.locator('h1')).toHaveText('Lindex');
-
-    // Check the product price
-    await expect(page.locator('span.text-xl')).toHaveText('124.97');
-
-    // Check the product size
-    await expect(page.locator('span:has-text("6")')).toBeVisible();
-
-    // Check the main image
-    await expect(page.locator('img[alt="Selected image of Lindex"]')).toBeVisible();
+    await expect(page).toHaveURL('./');
   });
 
+  test('should display product details correctly', async ({ page }) => {
+    await page.goto(`./products/${fakeProduct.id}`);
+
+    await expect(page.getByTestId('brandName')).toHaveText(fakeProduct.brand);
+    await expect(page.getByTestId('price')).toHaveText(`${fakeProduct.price}.00 SEK`); 
+    await expect(page.getByTestId('size')).toHaveText(fakeProduct.size_label);
+    await expect(page.getByTestId('color')).toHaveText(fakeProduct.color);
+    const description = page.locator('[data-testid="productDescription"]');
+  
+    await expect(description).toBeHidden();
+    await page.locator('[data-testid="descriptionBtn"]').click();
+    await expect(description).toBeVisible();
+  });
+
+
+ /*  
   test.skip('should update the main image when clicking on a thumbnail', async ({ page }) => {
     // Navigate to the product detail page
     await page.goto('/product/1'); // Adjust the URL as necessary

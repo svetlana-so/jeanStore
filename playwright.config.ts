@@ -1,9 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  use: {
-    baseURL: process.env.API_ORIGIN,
-  },
   testDir: './src/e2e',
   projects: [
     {
@@ -19,4 +16,13 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
+  webServer: {
+    command: 'npm run start',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+  },
+  use: {
+    baseURL: 'http://localhost:3000',
+  },
+
 });

@@ -29,9 +29,16 @@ User: sobolevasvetlanaalex@gmail.com
 Password: 123456
 ```
 
-// TODO
+## Running Tests
 
-- mock db for testing purpose
-- dashboard style
-- all products queries ? on the pages
-- add pagination
+* Unit Tests:
+
+ ```bash
+npm run test:unit
+```
+* e2e Tests:
+
+ ```bash
+npm run test:e2e
+
+```
