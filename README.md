@@ -32,6 +32,17 @@ User: sobolevasvetlanaalex@gmail.com
 Password: 123456
 ```
 
+
+
+## To set up DB in dev mode:
+
+- Follow these steps: https://nextjs.org/learn/dashboard-app/setting-up-your-database
+
+- Provide env variables by following the example at .env.example
+
+- Then go to your Dashboard at https://edgestore.dev/, create a new project and copy the keys to your environment variables.
+
+
 ## Running Tests
 
 * Unit Tests:
@@ -46,7 +57,3 @@ npm run test:e2e
 
 ```
 
-
-## To set up DB in dev mode:
-
-Follow these steps: https://nextjs.org/learn/dashboard-app/setting-up-your-database
