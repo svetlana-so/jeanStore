@@ -93,7 +93,7 @@ export default function LoginForm() {
         
       </div>
       <div
-          className="flex items-end"
+          className="flex justify-center"
           aria-live="polite"
           aria-atomic="true"
         >

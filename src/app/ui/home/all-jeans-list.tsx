@@ -1,9 +1,11 @@
 'use client';
 import React from 'react';
 import { Card } from '@/app/ui/products/card';
-
+import { Suspense } from 'react';
+import Loading from '../skeletons';
 import type { ProductWithImage } from '../../lib/definitions';
 import { useRouter } from 'next/navigation';
+import { TbMoodEmpty } from 'react-icons/tb';
 
 type AllJeansListProps = {
   products: ProductWithImage[];
@@ -20,7 +22,14 @@ export default function AllJeansList({
     router.push(`${basePath}/${id}`);
   };
   return (
-    <div  className="m-4 grid cursor-pointer justify-center gap-4 sm:grid-cols-2 lg:grid-cols-6">
+    <Suspense fallback={<Loading />}>
+      {products.length === 0 ? (
+          <div className="m-8 flex flex-row items-center justify-center gap-4">
+            <h1>No products</h1>
+            <TbMoodEmpty />
+          </div>
+        ) : (
+       <div  className="m-4 grid cursor-pointer justify-center gap-4 sm:grid-cols-2 lg:grid-cols-6">
       {products.map((product) => (
         <Card
           key={product.id}
@@ -28,6 +37,8 @@ export default function AllJeansList({
           onClick={() => handleCardClick(product.id)}
         />
       ))}
-    </div>
+    </div>)}
+    </Suspense>
+   
   );
 }
