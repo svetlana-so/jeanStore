@@ -7,7 +7,7 @@ import { getUniqueValues } from './utils';
 
 const db = createKysely<Database>();
 
-// rewrite to kysely
+
 export async function fetchProducts(): Promise<ProductWithImage[]> {
   try {
     const data = await db

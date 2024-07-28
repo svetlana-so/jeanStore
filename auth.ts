@@ -32,23 +32,15 @@ export async function signIn(data: any) {
     .safeParse(data);
 
   if (!parsedCredentials.success) {
-    throw new Error('Invalid credentials format');
+    throw new Error('Wrong credentials');
   }
 
   const { email, password } = parsedCredentials.data;
   const user = await getUser(email);
 
-  if (!user) {
-    throw new Error('No user found');
+  if (!user || !(await bcrypt.compare(password, user.password)) || user.role !== 'Admin') {
+    throw new Error('Wrong credentials');
   }
 
-  const passwordsMatch = await bcrypt.compare(password, user.password);
-  if (!passwordsMatch) {
-    throw new Error('Password does not match');
-  }
-
-  if (user.role !== 'Admin') {
-    throw new Error('User is not an admin');
-  }
   return user;
 }
